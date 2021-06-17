@@ -41,6 +41,7 @@ const client = createClient({
 });
 
 export const getStaticPaths = async () => {
+  //  A CHANGER SOLUTION TEMPORAIRE
   const categoriesTemp = ['headphone', 'earphone', 'speaker', 'product'];
   const product = await getAllData();
   const productFiltered = product.items.filter((e) =>

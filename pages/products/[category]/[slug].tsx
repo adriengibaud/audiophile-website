@@ -41,11 +41,7 @@ const client = createClient({
 });
 
 export const getStaticPaths = async () => {
-  const categories = await getCategories();
-  const categoriesArray = categories.items.map((e) =>
-    e.fields.slug.slice(0, -1)
-  );
-  const categoriesTemp = [...categoriesArray, 'product'];
+  const categoriesTemp = ['headphone', 'earphone', 'speaker', 'product'];
   const product = await getAllData();
   const productFiltered = product.items.filter((e) =>
     categoriesTemp.includes(e.sys.contentType.sys.id)
@@ -76,14 +72,13 @@ export async function getStaticProps({ params }) {
     content_type: 'categories',
   });
   return {
-    props: { object: items[0], categoriesData: categoriesData.items },
-    revalidate: 1,
+    props: { object: items, categoriesData: categoriesData.items },
   };
 }
 
 const ProductDetails = ({ object }) => {
-  console.log(object);
-  return <div></div>;
+  console.log(object[0]);
+  return <div>yoyoyo</div>;
 };
 
 export default ProductDetails;

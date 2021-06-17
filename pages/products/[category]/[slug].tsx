@@ -1,4 +1,39 @@
 import { createClient } from 'contentful';
+import axios from 'axios';
+
+export type Item = {
+  fields: {
+    description: string;
+    features: string;
+    gallery: [];
+    imageProductDesktop: {};
+    imageProductMobile: {};
+    imageProductTablet: {};
+    price: number;
+    slug: string;
+    title: string;
+  };
+  sys: {
+    contentType: {
+      sys: {
+        id: string;
+      };
+    };
+  };
+};
+export async function getAllData() {
+  const res = await axios.get(
+    'https://cdn.contentful.com/spaces/febpdaznqgsb/environments/master/entries?access_token=kYpKxaQf1BIzc9LH4HRnUrFeEwCMwm_Nx0hec_DC4Lg'
+  );
+  return res.data;
+}
+
+export async function getCategories() {
+  const res = await axios.get(
+    'https://cdn.contentful.com/spaces/febpdaznqgsb/environments/master/entries?access_token=kYpKxaQf1BIzc9LH4HRnUrFeEwCMwm_Nx0hec_DC4Lg&content_type=product'
+  );
+  return res.data;
+}
 
 const client = createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
@@ -6,9 +41,17 @@ const client = createClient({
 });
 
 export const getStaticPaths = async () => {
-  const res = await client.getEntries();
-  const paths = res.items.map((item) => {
-    console.log('cat is', item.sys.contentType.sys.id);
+  const categories = await getCategories();
+  const categoriesArray = categories.items.map((e) =>
+    e.fields.slug.slice(0, -1)
+  );
+  const categoriesTemp = [...categoriesArray, 'product'];
+  const product = await getAllData();
+  const productFiltered = product.items.filter((e) =>
+    categoriesTemp.includes(e.sys.contentType.sys.id)
+  );
+
+  const paths = productFiltered.map((item) => {
     return {
       params: {
         slug: item.fields.slug,
@@ -24,11 +67,11 @@ export const getStaticPaths = async () => {
 };
 
 export async function getStaticProps({ params }) {
-  console.log('params are', params);
   const { items } = await client.getEntries({
     content_type: params.category,
     'fields.slug': params.slug,
   });
+
   const categoriesData = await client.getEntries({
     content_type: 'categories',
   });

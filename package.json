@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@types/styled-components": "^5.1.10",
+    "axios": "^0.21.1",
     "babel-plugin-styled-components": "^1.12.0",
     "contentful": "^8.4.0",
     "next": "10.2.3",

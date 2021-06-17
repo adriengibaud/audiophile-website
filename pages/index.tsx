@@ -6,6 +6,21 @@ import Categories from 'sections/Categories';
 import Header from 'sections/Header';
 import Highlight from 'sections/Highlight';
 import Brand from 'sections/Brand';
+import axios from 'axios';
+
+export async function getAllData() {
+  const res = await axios.get(
+    'https://cdn.contentful.com/spaces/febpdaznqgsb/environments/master/entries?access_token=kYpKxaQf1BIzc9LH4HRnUrFeEwCMwm_Nx0hec_DC4Lg'
+  );
+  return res.data;
+}
+
+export async function getCategories() {
+  const res = await axios.get(
+    'https://cdn.contentful.com/spaces/febpdaznqgsb/environments/master/entries?access_token=kYpKxaQf1BIzc9LH4HRnUrFeEwCMwm_Nx0hec_DC4Lg&content_type=categories'
+  );
+  return res.data;
+}
 
 export async function getStaticProps() {
   const client = createClient({
@@ -31,6 +46,11 @@ export async function getStaticProps() {
   const brandData = await client.getEntries({
     content_type: 'brandDescription',
   });
+  const entriesTest = await client.getEntries();
+
+  const secondTest = await getCategories();
+
+  const firstTest = await getAllData();
 
   return {
     props: {
@@ -41,6 +61,9 @@ export async function getStaticProps() {
       mediumSizeHighlight: mediumSizeHighlight.items[0],
       smallSizeHighlight: smallSizeHighlight.items[0],
       brandData: brandData,
+      entriesTest,
+      secondTest,
+      firstTest,
     },
     revalidate: 1,
   };
@@ -54,8 +77,19 @@ export default function Home({
   mediumSizeHighlight,
   smallSizeHighlight,
   brandData,
+  entriesTest,
+  secondTest,
+  firstTest,
 }) {
-  console.log(brandData);
+  const catFilter = secondTest.items.map((e) => e.fields.slug.slice(0, -1));
+  const catend = [...catFilter, 'product'];
+  const prodFilter = firstTest.items.filter((e) =>
+    catend.includes(e.sys.contentType.sys.id)
+  );
+  console.log(catend);
+  console.log(firstTest);
+  console.log(prodFilter);
+
   return (
     <div>
       {/* {contentTypes

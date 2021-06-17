@@ -7,7 +7,10 @@ export interface HighlightTypes {
     slug: string;
     subtitle: string;
     title: string;
+    category: string;
   };
   metaData: {};
   sys: Sys;
 }
+
+export type HighlightNoTextTypes = Omit<HighlightTypes, 'subtitle'>;

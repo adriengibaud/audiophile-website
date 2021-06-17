@@ -21,8 +21,9 @@ const ButtonContainer = styled.button<{ variant: number }>`
   width: 160px;
   background: ${({ variant, theme }) =>
     (variant === 1 && theme.colors.primary) ||
-    (variant === 2 && theme.colors.white) ||
+    (variant === 2 && 'none') ||
     (variant === 3 && 'none')};
+  border: ${({ variant }) => variant === 2 && 'solid 1px black'};
   height: 48px;
   display: flex;
   flex-direction: row;

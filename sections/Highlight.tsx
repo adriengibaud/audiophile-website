@@ -1,10 +1,25 @@
 import FullSizeHighlight from '@/components/highlight/FullSizeHighlight';
-import { HighlightTypes } from '@/types/highlight';
+import MediumSizeHighlight from '@/components/highlight/MediumSizeHighlight';
+import SmallSizeHighlight from '@/components/highlight/SmallSizeHighlight';
+import { HighlightNoTextTypes, HighlightTypes } from '@/types/highlight';
 import styled from 'styled-components';
 
-const Highlight = ({ fullSizeData }: { fullSizeData: HighlightTypes }) => {
-  console.log(fullSizeData);
-  return <FullSizeHighlight fullSizeData={fullSizeData} />;
+const Highlight = ({
+  fullSizeData,
+  mediumSizeHighlight,
+  smallSizeHighlight,
+}: {
+  fullSizeData: HighlightTypes;
+  mediumSizeHighlight: HighlightNoTextTypes;
+  smallSizeHighlight: HighlightNoTextTypes;
+}) => {
+  return (
+    <>
+      <FullSizeHighlight fullSizeData={fullSizeData} />
+      <MediumSizeHighlight mediumSizeHighlight={mediumSizeHighlight} />
+      <SmallSizeHighlight smallSizeHighlight={smallSizeHighlight} />
+    </>
+  );
 };
 
 export default Highlight;

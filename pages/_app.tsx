@@ -1,7 +1,13 @@
-import '../styles/globals.css'
+import { createClient } from 'contentful';
+import Layout from '../components/Layout';
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  console.log(pageProps);
+  return (
+    <Layout categoriesData={pageProps.categoriesData}>
+      <Component {...pageProps} />
+    </Layout>
+  );
 }
 
-export default MyApp
+export default MyApp;

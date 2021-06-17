@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Categories from 'sections/Categories';
 import Header from 'sections/Header';
 import Highlight from 'sections/Highlight';
+import Brand from 'sections/Brand';
 
 export async function getStaticProps() {
   const client = createClient({
@@ -21,6 +22,15 @@ export async function getStaticProps() {
   const fullSizeHighlight = await client.getEntries({
     content_type: 'fullsizeHighlight',
   });
+  const mediumSizeHighlight = await client.getEntries({
+    content_type: 'mediumSizeHighlight',
+  });
+  const smallSizeHighlight = await client.getEntries({
+    content_type: 'smallSizeHighlight',
+  });
+  const brandData = await client.getEntries({
+    content_type: 'brandDescription',
+  });
 
   return {
     props: {
@@ -28,6 +38,9 @@ export async function getStaticProps() {
       categoriesData: categoriesData.items,
       headerData: headerData.items[0],
       fullSizeHighlight: fullSizeHighlight.items[0],
+      mediumSizeHighlight: mediumSizeHighlight.items[0],
+      smallSizeHighlight: smallSizeHighlight.items[0],
+      brandData: brandData,
     },
     revalidate: 1,
   };
@@ -38,8 +51,11 @@ export default function Home({
   categoriesData,
   headerData,
   fullSizeHighlight,
+  mediumSizeHighlight,
+  smallSizeHighlight,
+  brandData,
 }) {
-  console.log(fullSizeHighlight);
+  console.log(brandData);
   return (
     <div>
       {/* {contentTypes
@@ -51,7 +67,12 @@ export default function Home({
         ))}*/}
       <Header data={headerData} />
       <Categories categories={categoriesData} />
-      <Highlight fullSizeData={fullSizeHighlight} />
+      <Highlight
+        fullSizeData={fullSizeHighlight}
+        mediumSizeHighlight={mediumSizeHighlight}
+        smallSizeHighlight={smallSizeHighlight}
+      />
+      <Brand />
     </div>
   );
 }

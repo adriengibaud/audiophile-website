@@ -48,7 +48,7 @@ export const getStaticPaths = async () => {
     categoriesTemp.includes(e.sys.contentType.sys.id)
   );
 
-  const paths = productFiltered.map((item) => {
+  const paths = await productFiltered.map((item) => {
     return {
       params: {
         slug: item.fields.slug,

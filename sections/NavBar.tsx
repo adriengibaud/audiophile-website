@@ -24,7 +24,10 @@ const NavBar = ({ categoriesData }: { categoriesData: CategoryTypes[] }) => {
         </MenuEntry>
 
         {categoriesData.map((e) => (
-          <MenuEntry onClick={() => handleClick(e.fields.slug)}>
+          <MenuEntry
+            key={e.fields.slug}
+            onClick={() => handleClick(e.fields.slug)}
+          >
             <TextEntry>{e.fields.title}</TextEntry>
             <EntryImageContainer>
               <Image

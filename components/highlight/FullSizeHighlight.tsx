@@ -10,6 +10,12 @@ const FullSizeHighlight = ({
   fullSizeData: HighlightTypes;
 }) => {
   const router = useRouter();
+  console.log(fullSizeData);
+  const linkData = fullSizeData.fields.link.content.find(
+    (e) => e.nodeType === 'embedded-entry-block'
+  );
+
+  console.log(linkData);
 
   return (
     <Container>

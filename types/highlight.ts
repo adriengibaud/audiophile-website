@@ -8,6 +8,18 @@ export interface HighlightTypes {
     subtitle: string;
     title: string;
     category: string;
+    link: {
+      content: {
+        content: [];
+        data: {
+          target: {
+            fields: {};
+          };
+        };
+        nodeType: string;
+      }[];
+      data: {};
+    };
   };
   metaData: {};
   sys: Sys;

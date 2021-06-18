@@ -1,27 +1,8 @@
 import { createClient } from 'contentful';
 import axios from 'axios';
+import safeJsonStringify from 'safe-json-stringify';
 
-export type Item = {
-  fields: {
-    description: string;
-    features: string;
-    gallery: [];
-    imageProductDesktop: {};
-    imageProductMobile: {};
-    imageProductTablet: {};
-    price: number;
-    slug: string;
-    title: string;
-  };
-  sys: {
-    contentType: {
-      sys: {
-        id: string;
-      };
-    };
-  };
-};
-export async function getAllData() {
+/*export async function getAllData() {
   const res = await axios.get(
     'https://cdn.contentful.com/spaces/febpdaznqgsb/environments/master/entries?access_token=kYpKxaQf1BIzc9LH4HRnUrFeEwCMwm_Nx0hec_DC4Lg'
   );
@@ -33,7 +14,7 @@ export async function getCategories() {
     'https://cdn.contentful.com/spaces/febpdaznqgsb/environments/master/entries?access_token=kYpKxaQf1BIzc9LH4HRnUrFeEwCMwm_Nx0hec_DC4Lg&content_type=product'
   );
   return res.data;
-}
+}*/
 
 const client = createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
@@ -41,18 +22,22 @@ const client = createClient({
 });
 
 export const getStaticPaths = async () => {
-  //  A CHANGER SOLUTION TEMPORAIRE
-  const categoriesTemp = ['headphone', 'earphone', 'speaker', 'product'];
-  const product = await getAllData();
-  const productFiltered = product.items.filter((e) =>
-    categoriesTemp.includes(e.sys.contentType.sys.id)
+  const categories = await client.getContentTypes({
+    description: 'products',
+  });
+  const filterList = categories.items.map((e) => e.sys.id);
+  const res = await client.getEntries();
+  const stringifiedData = safeJsonStringify(res);
+  const rawData = JSON.parse(stringifiedData);
+  const data = rawData.items.filter((e) =>
+    filterList.includes(e.sys.contentType.sys.id)
   );
 
-  const paths = await productFiltered.map((item) => {
+  const paths = await data.map((item) => {
     return {
       params: {
-        slug: item.fields.slug,
         category: item.sys.contentType.sys.id,
+        slug: item.fields.slug,
       },
     };
   });
@@ -64,21 +49,23 @@ export const getStaticPaths = async () => {
 };
 
 export async function getStaticProps({ params }) {
-  const { items } = await client.getEntries({
+  const rawItems = await client.getEntries({
     content_type: params.category,
     'fields.slug': params.slug,
   });
+  const stringifiedData = safeJsonStringify(rawItems);
+  const data = JSON.parse(stringifiedData);
 
   const categoriesData = await client.getEntries({
     content_type: 'categories',
   });
   return {
-    props: { object: items, categoriesData: categoriesData.items },
+    props: { object: data, categoriesData: categoriesData.items },
   };
 }
 
 const ProductDetails = ({ object }) => {
-  console.log(object[0]);
+  console.log(object);
   return <div>yoyoyo</div>;
 };
 

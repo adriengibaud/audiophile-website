@@ -7,6 +7,7 @@ import Header from 'sections/Header';
 import Highlight from 'sections/Highlight';
 import Brand from 'sections/Brand';
 import axios from 'axios';
+import safeJsonStringify from 'safe-json-stringify';
 
 export async function getAllData() {
   const res = await axios.get(
@@ -46,11 +47,12 @@ export async function getStaticProps() {
   const brandData = await client.getEntries({
     content_type: 'brandDescription',
   });
-  const entriesTest = await client.getEntries();
-
-  const secondTest = await getCategories();
-
-  const firstTest = await getAllData();
+  const firstTest = await client.getContentTypes({
+    description: 'products',
+  });
+  const res = await client.getEntries();
+  const stringifiedData = safeJsonStringify(res);
+  const data = JSON.parse(stringifiedData);
 
   return {
     props: {
@@ -61,9 +63,8 @@ export async function getStaticProps() {
       mediumSizeHighlight: mediumSizeHighlight.items[0],
       smallSizeHighlight: smallSizeHighlight.items[0],
       brandData: brandData,
-      entriesTest,
-      secondTest,
       firstTest,
+      data,
     },
     revalidate: 1,
   };
@@ -80,15 +81,14 @@ export default function Home({
   entriesTest,
   secondTest,
   firstTest,
+  data,
 }) {
-  const catFilter = secondTest.items.map((e) => e.fields.slug.slice(0, -1));
-  const catend = [...catFilter, 'product'];
-  const prodFilter = firstTest.items.filter((e) =>
-    catend.includes(e.sys.contentType.sys.id)
-  );
-  console.log(catend);
   console.log(firstTest);
-  console.log(prodFilter);
+  console.log(data);
+  const filterList = firstTest.items.map((e) => e.sys.id);
+  console.log(
+    data.items.filter((e) => filterList.includes(e.sys.contentType.sys.id))
+  );
 
   return (
     <div>

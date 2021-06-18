@@ -1,5 +1,6 @@
 import { createClient } from 'contentful';
 import Link from 'next/link';
+import safeJsonStringify from 'safe-json-stringify';
 
 const client = createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
@@ -7,7 +8,7 @@ const client = createClient({
 });
 
 export const getStaticPaths = async () => {
-  const res = await client.getContentTypes();
+  const res = await client.getContentTypes({ description: 'products' });
 
   const paths = res.items.map((item) => {
     return {
@@ -22,34 +23,29 @@ export const getStaticPaths = async () => {
 };
 
 export async function getStaticProps({ params }) {
-  const { items } = await client.getEntries({
+  const rawItems = await client.getEntries({
     content_type: params.category,
   });
+  const stringifiedData = safeJsonStringify(rawItems);
+  const data = JSON.parse(stringifiedData);
   const categoriesData = await client.getEntries({
     content_type: 'categories',
   });
-  console.log(items);
   return {
-    props: { product: items, categoriesData: categoriesData.items },
+    props: {
+      product: data,
+      category: params.category,
+      categoriesData: categoriesData.items,
+    },
   };
 }
 
-const Categories = ({ product }) => {
+const Categories = ({ product, category }) => {
   console.log(product);
   return (
     <>
-      <h1>{product[0].fields.title}</h1>
-      <h1>content id : {product[0].sys.contentType.sys.id}</h1>
-      <Link
-        href={
-          '/products/' +
-          product[0].sys.contentType.sys.id +
-          '/' +
-          product[0].fields.slug
-        }
-      >
-        <a>Click to see it</a>
-      </Link>
+      <div>{category}</div>
+      <div>{product.items[0].fields.title}</div>
     </>
   );
 };

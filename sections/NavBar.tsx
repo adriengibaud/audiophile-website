@@ -23,22 +23,23 @@ const NavBar = ({ categoriesData }: { categoriesData: CategoryTypes[] }) => {
           <TextEntry>Home</TextEntry>
         </MenuEntry>
 
-        {categoriesData.map((e) => (
-          <MenuEntry
-            key={e.fields.slug}
-            onClick={() => handleClick(e.fields.slug)}
-          >
-            <TextEntry>{e.fields.title}</TextEntry>
-            <EntryImageContainer>
-              <Image
-                src={`https:${e.fields.image.fields.file.url}`}
-                layout='fill'
-                objectFit='contain'
-                quality={100}
-              />
-            </EntryImageContainer>
-          </MenuEntry>
-        ))}
+        {categoriesData &&
+          categoriesData.map((e) => (
+            <MenuEntry
+              key={e.fields.slug}
+              onClick={() => handleClick(e.fields.slug)}
+            >
+              <TextEntry>{e.fields.title}</TextEntry>
+              <EntryImageContainer>
+                <Image
+                  src={`https:${e.fields.image.fields.file.url}`}
+                  layout='fill'
+                  objectFit='contain'
+                  quality={100}
+                />
+              </EntryImageContainer>
+            </MenuEntry>
+          ))}
       </>
     );
   };

@@ -37,6 +37,7 @@ export async function getStaticProps({ params }) {
       category: params.category,
       categoriesData: categoriesData.items,
     },
+    revalidate: 1,
   };
 }
 

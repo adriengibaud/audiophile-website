@@ -50,9 +50,9 @@ export async function getStaticProps() {
   const firstTest = await client.getContentTypes({
     description: 'products',
   });
-  const res = await client.getEntries();
-  const stringifiedData = safeJsonStringify(res);
-  const data = JSON.parse(stringifiedData);
+  const footerData = await client.getEntries({
+    content_type: 'footer',
+  });
 
   return {
     props: {
@@ -62,9 +62,9 @@ export async function getStaticProps() {
       fullSizeHighlight: fullSizeHighlight.items[0],
       mediumSizeHighlight: mediumSizeHighlight.items[0],
       smallSizeHighlight: smallSizeHighlight.items[0],
-      brandData: brandData,
+      brandData: brandData.items[0],
       firstTest,
-      data,
+      footerData: footerData.items[0],
     },
     revalidate: 1,
   };
@@ -78,18 +78,8 @@ export default function Home({
   mediumSizeHighlight,
   smallSizeHighlight,
   brandData,
-  entriesTest,
-  secondTest,
-  firstTest,
-  data,
+  footerData,
 }) {
-  console.log(firstTest);
-  console.log(data);
-  const filterList = firstTest.items.map((e) => e.sys.id);
-  console.log(
-    data.items.filter((e) => filterList.includes(e.sys.contentType.sys.id))
-  );
-
   return (
     <div>
       {/* {contentTypes
@@ -106,7 +96,7 @@ export default function Home({
         mediumSizeHighlight={mediumSizeHighlight}
         smallSizeHighlight={smallSizeHighlight}
       />
-      <Brand />
+      <Brand brandData={brandData} />
     </div>
   );
 }

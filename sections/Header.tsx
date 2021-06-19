@@ -33,7 +33,7 @@ const Header = ({ data }: { data: HeaderTypes }) => {
               src={`https:${data.fields.image.fields.file.url}`}
               layout='fill'
               objectFit='contain'
-              quality={100}
+              quality={75}
             />
           </ImageContainer>
         </HeaderBody>

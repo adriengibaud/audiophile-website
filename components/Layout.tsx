@@ -18,7 +18,7 @@ const Layout = ({
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <NavBar categoriesData={categoriesData} />
+      {/* <NavBar categoriesData={categoriesData} /> */}
       {children}
       {/* <Footer footerData={footerData} categoriesData={categoriesData} /> */}
     </ThemeProvider>

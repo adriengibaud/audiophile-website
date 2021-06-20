@@ -1,5 +1,5 @@
 import { GlobalStyle } from '../styles/GlobalStyle';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import { theme } from '../styles/theme';
 import NavBar from 'sections/NavBar';
 import { CategoryTypes } from '@/types/category';
@@ -16,15 +16,17 @@ const Layout = ({
   footerData: FooterTypes;
 }) => {
   return (
-    <div>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <NavBar categoriesData={categoriesData} />
-        {children}
-        <Footer footerData={footerData} />
-      </ThemeProvider>
-    </div>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <NavBar categoriesData={categoriesData} />
+      {children}
+      <Footer footerData={footerData} categoriesData={categoriesData} />
+    </ThemeProvider>
   );
 };
 
 export default Layout;
+
+const Container = styled.html`
+  max-width: 100vw;
+`;

@@ -81,7 +81,7 @@ export default function Home({
   footerData,
 }) {
   return (
-    <div>
+    <>
       {/* {contentTypes
         .filter((p) => p.description === 'products')
         .map((e) => (
@@ -97,6 +97,6 @@ export default function Home({
         smallSizeHighlight={smallSizeHighlight}
       />
       <Brand brandData={brandData} />
-    </div>
+    </>
   );
 }

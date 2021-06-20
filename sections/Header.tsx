@@ -44,8 +44,15 @@ const Header = ({ data }: { data: HeaderTypes }) => {
 
 export default Header;
 
+const Container = styled.div`
+  width: 100vw;
+  max-width: 100vw;
+  height: 630px;
+  background: ${({ theme }) => theme.colors.secondary};
+`;
+
 const HeaderBody = styled.section`
-  width: 100%;
+  width: 100vw;
   max-width: 1110px;
   height: 100%;
   background: ${({ theme }) => theme.colors.secondary};
@@ -54,12 +61,6 @@ const HeaderBody = styled.section`
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-`;
-
-const Container = styled.div`
-  width: 100vw;
-  height: 630px;
-  background: ${({ theme }) => theme.colors.secondary};
 `;
 
 const ImageContainer = styled.div`

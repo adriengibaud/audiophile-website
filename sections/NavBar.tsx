@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { CategoryTypes } from '@/types/category';
+import NavButtons from '@/components/NavButtons';
 
 const NavBar = ({ categoriesData }: { categoriesData: CategoryTypes[] }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,7 +57,9 @@ const NavBar = ({ categoriesData }: { categoriesData: CategoryTypes[] }) => {
           <ImageContainer>
             <Image src='/logo.svg' layout='fill' />
           </ImageContainer>
-          <Menu>{MenuBody()}</Menu>
+          <Menu>
+            <NavButtons categoriesData={categoriesData} />
+          </Menu>
           <CartContainer />
         </HeaderBody>
       </Container>
@@ -130,7 +133,7 @@ const ImageContainer = styled.div`
 `;
 
 const Menu = styled.div`
-  width: 600px;
+  width: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -155,6 +158,7 @@ const MenuBackground = styled.div<{ isOpen: Boolean }>`
   width: 100vw;
   height: calc(100vh - 100px);
   background: rgba(0, 0, 0, 0.5);
+  transition: display 3s linear;
 `;
 
 const MenuContainer = styled.div<{ isOpen: boolean }>`

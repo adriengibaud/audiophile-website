@@ -20,7 +20,7 @@ const Layout = ({
       <GlobalStyle />
       <NavBar categoriesData={categoriesData} />
       {children}
-      <Footer footerData={footerData} categoriesData={categoriesData} />
+      {/* <Footer footerData={footerData} categoriesData={categoriesData} /> */}
     </ThemeProvider>
   );
 };

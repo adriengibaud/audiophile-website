@@ -22,11 +22,12 @@ const client = createClient({
 });
 
 export const getStaticPaths = async () => {
-  const resCategories = await client.getContentTypes({
+  const categoriesData = await client.getEntries({
+    content_type: 'categories',
+  });
+  const categories = await client.getContentTypes({
     description: 'products',
   });
-  const stringifiedCategories = safeJsonStringify(resCategories);
-  const categories = JSON.parse(stringifiedCategories);
   const filterList = categories.items.map((e) => e.sys.id);
   const res = await client.getEntries();
   const stringifiedData = safeJsonStringify(res);
@@ -40,6 +41,7 @@ export const getStaticPaths = async () => {
       params: {
         category: item.sys.contentType.sys.id,
         slug: item.fields.slug,
+        categoriesData: categoriesData.items,
       },
     };
   });

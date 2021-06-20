@@ -22,12 +22,6 @@ const client = createClient({
 });
 
 export const getStaticPaths = async () => {
-  const categoriesData = await client.getEntries({
-    content_type: 'categories',
-  });
-  const footerData = await client.getEntries({
-    content_type: 'footer',
-  });
   const categories = await client.getContentTypes({
     description: 'products',
   });
@@ -44,8 +38,6 @@ export const getStaticPaths = async () => {
       params: {
         category: item.sys.contentType.sys.id,
         slug: item.fields.slug,
-        categoriesData: categoriesData.items,
-        footerData: footerData.items[0],
       },
     };
   });
@@ -61,6 +53,9 @@ export async function getStaticProps({ params }) {
     content_type: params.category,
     'fields.slug': params.slug,
   });
+  const footerData = await client.getEntries({
+    content_type: 'footer',
+  });
   const stringifiedData = safeJsonStringify(rawItems);
   const data = JSON.parse(stringifiedData);
 
@@ -68,7 +63,11 @@ export async function getStaticProps({ params }) {
     content_type: 'categories',
   });
   return {
-    props: { object: data, categoriesData: categoriesData.items },
+    props: {
+      object: data,
+      categoriesData: categoriesData.items,
+      footerData: footerData.items[0],
+    },
   };
 }
 

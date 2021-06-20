@@ -25,6 +25,9 @@ export const getStaticPaths = async () => {
   const categoriesData = await client.getEntries({
     content_type: 'categories',
   });
+  const footerData = await client.getEntries({
+    content_type: 'footer',
+  });
   const categories = await client.getContentTypes({
     description: 'products',
   });
@@ -42,6 +45,7 @@ export const getStaticPaths = async () => {
         category: item.sys.contentType.sys.id,
         slug: item.fields.slug,
         categoriesData: categoriesData.items,
+        footerData: footerData.items[0],
       },
     };
   });

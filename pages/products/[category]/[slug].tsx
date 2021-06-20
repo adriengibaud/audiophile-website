@@ -71,7 +71,7 @@ export async function getStaticProps({ params }) {
   };
 }
 
-const ProductDetails = ({ object }) => {
+const ProductDetails = ({ object, categoriesData, footerData }) => {
   console.log(object);
   return <div>yoyoyo</div>;
 };

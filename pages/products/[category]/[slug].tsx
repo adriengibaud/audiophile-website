@@ -25,12 +25,12 @@ export const getStaticPaths = async () => {
   const categories = await client.getContentTypes({
     description: 'products',
   });
-  const filterListFull = categories.items.map((e) => e.sys.id);
-  const filterList = filterListFull.filter((e) => e == 'headphone');
+  const filterListFull = await categories.items.map((e) => e.sys.id);
+  const filterList = await filterListFull.filter((e) => e == 'headphone');
   const res = await client.getEntries();
-  const stringifiedData = safeJsonStringify(res);
-  const rawData = JSON.parse(stringifiedData);
-  const data = rawData.items.filter((e) =>
+  const stringifiedData = await safeJsonStringify(res);
+  const rawData = await JSON.parse(stringifiedData);
+  const data = await rawData.items.filter((e) =>
     filterList.includes(e.sys.contentType.sys.id)
   );
 
@@ -54,20 +54,20 @@ export async function getStaticProps({ params }) {
     content_type: params.category,
     'fields.slug': params.slug,
   });
-  const stringifiedData = safeJsonStringify(rawItems);
-  const data = JSON.parse(stringifiedData);
+  const stringifiedData = await safeJsonStringify(rawItems);
+  const data = await JSON.parse(stringifiedData);
 
   const rawFooterData = await client.getEntries({
     content_type: 'footer',
   });
-  const stringifiedFooter = safeJsonStringify(rawFooterData);
-  const footerData = JSON.parse(stringifiedFooter);
+  const stringifiedFooter = await safeJsonStringify(rawFooterData);
+  const footerData = await JSON.parse(stringifiedFooter);
 
   const rawCategoriesData = await client.getEntries({
     content_type: 'categories',
   });
-  const stringifiedCategories = safeJsonStringify(rawCategoriesData);
-  const categoriesData = JSON.parse(stringifiedCategories);
+  const stringifiedCategories = await safeJsonStringify(rawCategoriesData);
+  const categoriesData = await JSON.parse(stringifiedCategories);
 
   return {
     props: {

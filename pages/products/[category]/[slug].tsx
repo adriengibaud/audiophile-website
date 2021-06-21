@@ -32,12 +32,20 @@ export const getStaticPaths = async () => {
   const data = await rawData.items.filter((e) =>
     filterList.includes(e.sys.contentType.sys.id)
   );
+  const categoriesData = await client.getEntries({
+    content_type: 'categories',
+  });
+  const footerData = await client.getEntries({
+    content_type: 'footer',
+  });
 
   const paths = await data.map((item) => {
     return {
       params: {
         category: item.sys.contentType.sys.id,
         slug: item.fields.slug,
+        categoriesData: categoriesData.items,
+        footerData: footerData.items[0],
       },
     };
   });

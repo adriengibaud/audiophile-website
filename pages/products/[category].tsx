@@ -31,11 +31,15 @@ export async function getStaticProps({ params }) {
   const categoriesData = await client.getEntries({
     content_type: 'categories',
   });
+  const footerData = await client.getEntries({
+    content_type: 'footer',
+  });
   return {
     props: {
       product: data,
       category: params.category,
       categoriesData: categoriesData.items,
+      footerData: footerData.items[0],
     },
     revalidate: 1,
   };

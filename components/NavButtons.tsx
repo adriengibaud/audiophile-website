@@ -37,6 +37,12 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  @media screen and (max-width: 689px) {
+    width: 108px;
+    min-height: 148px;
+    max-height: 148px;
+    flex-direction: column;
+  }
 `;
 
 const Entry = styled.button`
@@ -50,5 +56,9 @@ const Entry = styled.button`
   text-transform: uppercase;
   :hover {
     color: ${({ theme }) => theme.colors.primary};
+  }
+  @media screen and (max-width: 689px) {
+    height: 25px;
+    text-align: center;
   }
 `;

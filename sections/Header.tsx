@@ -52,7 +52,7 @@ const Container = styled.div`
 `;
 
 const HeaderBody = styled.section`
-  width: 100vw;
+  width: 100%;
   max-width: 1110px;
   height: 100%;
   background: ${({ theme }) => theme.colors.secondary};

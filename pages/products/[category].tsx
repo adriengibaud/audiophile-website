@@ -1,6 +1,13 @@
+import ProductResult from '@/components/category/ProductResult';
+import { CategoryContentTypes, CategoryTypes } from '@/types/category';
 import { createClient } from 'contentful';
 import Link from 'next/link';
 import safeJsonStringify from 'safe-json-stringify';
+import styled from 'styled-components';
+import { useRouter } from 'next/router';
+import Categories from 'sections/Categories';
+import Brand from 'sections/Brand';
+import { BrandType } from '@/types/brand';
 
 const client = createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
@@ -34,25 +41,104 @@ export async function getStaticProps({ params }) {
   const footerData = await client.getEntries({
     content_type: 'footer',
   });
+  const brandData = await client.getEntries({
+    content_type: 'brandDescription',
+  });
   return {
     props: {
       product: data,
       category: params.category,
       categoriesData: categoriesData.items,
       footerData: footerData.items[0],
+      brandData: brandData.items[0],
     },
     revalidate: 1,
   };
 }
 
-const Categories = ({ product, category }) => {
+const CategoriesResult = ({
+  product,
+  category,
+  categoriesData,
+  brandData,
+}: {
+  product: CategoryContentTypes;
+  category: string;
+  categoriesData: CategoryTypes[];
+  brandData: BrandType;
+}) => {
+  const router = useRouter();
   console.log(product);
+  console.log(category);
+
+  const categoryTitle = () => {
+    if (product.total > 1) {
+      const categoryPlurial = category + 's';
+      return categoryPlurial;
+    } else return category;
+  };
+
+  const redirectToItem = (slug) => {
+    console.log(category);
+    router.push('/products/' + category + '/' + slug);
+  };
+
   return (
     <>
-      <div>{category}</div>
-      <div>{product.items[0].fields.title}</div>
+      <Mask>
+        <Title>{categoryTitle()}</Title>
+      </Mask>
+      <ResultsContainer>
+        {product.items.map((e, i) => (
+          <ProductResult
+            productData={e}
+            index={i}
+            clickHandler={(e) => redirectToItem(e)}
+          />
+        ))}
+      </ResultsContainer>
+      <Categories categories={categoriesData} />
+      <Brand brandData={brandData} />
     </>
   );
 };
 
-export default Categories;
+export default CategoriesResult;
+
+const Mask = styled.div`
+  width: 100vw;
+  height: 236px;
+  background: ${({ theme }) => theme.colors.secondary};
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Title = styled.h2`
+  color: ${({ theme }) => theme.colors.white};
+`;
+
+const ResultsContainer = styled.section`
+  margin-top: 100px;
+  margin-bottom: 100px;
+  section:nth-of-type(odd) {
+    flex-direction: row;
+  }
+  section:not(:first-child) {
+    margin-top: 100px;
+  }
+  @media screen and (max-width: 1110px) {
+    flex-direction: column;
+    section:nth-of-type(odd) {
+      flex-direction: column;
+    }
+  }
+  @media screen and (max-width: 689px) {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    section:not(:first-child) {
+      margin-top: 70px;
+    }
+  }
+`;

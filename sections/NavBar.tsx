@@ -20,10 +20,6 @@ const NavBar = ({ categoriesData }: { categoriesData: CategoryTypes[] }) => {
   const MenuBody = () => {
     return (
       <>
-        <MenuEntry onClick={() => handleClick()}>
-          <TextEntry>Home</TextEntry>
-        </MenuEntry>
-
         {categoriesData &&
           categoriesData.map((e) => (
             <MenuEntry
@@ -77,11 +73,13 @@ const Container = styled.nav`
   height: 100px;
   width: 100vw;
   background: ${({ theme }) => theme.colors.secondary};
+  z-index: 100;
 `;
 
 const HeaderBody = styled.div`
   width: auto;
   height: 100%;
+  z-index: 100;
   max-width: 1110px;
   margin: 0 5vw;
   display: flex;
@@ -162,34 +160,42 @@ const MenuBackground = styled.div<{ isOpen: Boolean }>`
 `;
 
 const MenuContainer = styled.div<{ isOpen: boolean }>`
-  height: calc(100vh - 99px);
+  height: 200px;
   position: absolute;
   background: white;
-  width: 300px;
-  z-index: 100000;
+  width: 100vw;
+  z-index: 20;
   top: 99px;
   color: black;
   display: flex;
   flex-direction: column;
-
   transform: ${({ isOpen }) =>
     isOpen ? 'translateX(0)' : 'translateX(-100%)'};
   transition: transform 0.4s;
+  @media screen and (max-width: 470px) {
+    height: 340px;
+  }
 `;
 
 const EntryContainer = styled.div`
   width: 80%;
   height: 450px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin: 50px auto 0 auto;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  @media screen and (max-width: 470px) {
+    justify-content: center;
+    gap: 25px;
+  }
 `;
 
 const MenuEntry = styled.button`
   height: 100px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column-reverse;
   justify-content: space-between;
   align-items: center;
 `;

@@ -70,7 +70,7 @@ export default Brand;
 const Container = styled.section`
   height: 588px;
   width: 1110px;
-  margin: 0 auto;
+  margin: 100px auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -83,7 +83,6 @@ const Container = styled.section`
   @media screen and (max-width: 689px) {
     width: 327px;
     height: 698px;
-    margin: 0px auto 50px auto;
   }
 `;
 

@@ -1,4 +1,5 @@
 import { Sys } from 'types/sys';
+import { EntryType } from './entry';
 
 export interface CategoryTypes {
   fields: {
@@ -28,4 +29,19 @@ export interface CategoryTypes {
   };
   metadata: {};
   sys: Sys;
+}
+
+export interface CategoryContentTypes {
+  includes: {
+    Asset: {
+      fields: {};
+      metadata: {};
+      sys: Sys;
+    }[];
+    Entry: EntryType[];
+  };
+  items: EntryType[];
+  limit: number;
+  skip: number;
+  total: number;
 }

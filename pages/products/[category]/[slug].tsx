@@ -25,7 +25,8 @@ export const getStaticPaths = async () => {
   const categories = await client.getContentTypes({
     description: 'products',
   });
-  const filterList = categories.items.map((e) => e.sys.id);
+  const filterListFull = categories.items.map((e) => e.sys.id);
+  const filterList = filterListFull.filter((e) => e == 'headphone');
   const res = await client.getEntries();
   const stringifiedData = safeJsonStringify(res);
   const rawData = JSON.parse(stringifiedData);

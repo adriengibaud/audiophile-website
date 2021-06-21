@@ -57,23 +57,9 @@ export async function getStaticProps({ params }) {
   const stringifiedData = await safeJsonStringify(rawItems);
   const data = await JSON.parse(stringifiedData);
 
-  const rawFooterData = await client.getEntries({
-    content_type: 'footer',
-  });
-  const stringifiedFooter = await safeJsonStringify(rawFooterData);
-  const footerData = await JSON.parse(stringifiedFooter);
-
-  const rawCategoriesData = await client.getEntries({
-    content_type: 'categories',
-  });
-  const stringifiedCategories = await safeJsonStringify(rawCategoriesData);
-  const categoriesData = await JSON.parse(stringifiedCategories);
-
   return {
     props: {
       object: data.items[0],
-      categoriesData: categoriesData.items,
-      footerData: footerData.items[0],
     },
   };
 }

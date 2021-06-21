@@ -130,4 +130,8 @@ export const GlobalStyle = createGlobalStyle`
     letter-spacing: 1.3px;
     font-weight: bold;
   }
+
+  #__next{
+    overflow-x: hidden;
+  }
   `;

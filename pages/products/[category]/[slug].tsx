@@ -32,20 +32,12 @@ export const getStaticPaths = async () => {
   const data = await rawData.items.filter((e) =>
     filterList.includes(e.sys.contentType.sys.id)
   );
-  const categoriesData = await client.getEntries({
-    content_type: 'categories',
-  });
-  const footerData = await client.getEntries({
-    content_type: 'footer',
-  });
 
   const paths = await data.map((item) => {
     return {
       params: {
         category: item.sys.contentType.sys.id,
         slug: item.fields.slug,
-        categoriesData: categoriesData.items,
-        footerData: footerData.items[0],
       },
     };
   });
@@ -63,10 +55,18 @@ export async function getStaticProps({ params }) {
   });
   const stringifiedData = await safeJsonStringify(rawItems);
   const data = await JSON.parse(stringifiedData);
-
+  const categoriesData = await client.getEntries({
+    content_type: 'categories',
+  });
+  const footerData = await client.getEntries({
+    content_type: 'footer',
+  });
   return {
     props: {
       object: data.items[0],
+
+      categoriesData: categoriesData.items,
+      footerData: footerData.items[0],
     },
   };
 }

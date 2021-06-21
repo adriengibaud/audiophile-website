@@ -28,10 +28,6 @@ const Brand = ({ brandData }: { brandData: BrandType }) => {
     test();
   }, [brandData.fields.catchingPhrase]);
 
-  console.log(firstPart);
-  console.log(secondPart);
-  console.log(highlight);
-
   return (
     <Container>
       <InfosContainer>

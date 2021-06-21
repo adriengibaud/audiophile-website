@@ -21,30 +21,14 @@ const client = createClient({
   accessToken: process.env.CONTENTFUL_ACCESS_KEY,
 });
 
-export async function getStaticProps({ params }) {
-  const rawItems = await client.getEntries({
-    content_type: params.category,
-    'fields.slug': params.slug,
-  });
-  const stringifiedData = await safeJsonStringify(rawItems);
-  const data = await JSON.parse(stringifiedData);
-
-  return {
-    props: {
-      object: data.items[0],
-    },
-  };
-}
-
 export const getStaticPaths = async () => {
   const categories = await client.getContentTypes({
     description: 'products',
   });
-  const filterListFull = await categories.items.map((e) => e.sys.id);
-  const filterList = await filterListFull.filter((e) => e == 'headphone');
+  const filterList = categories.items.map((e) => e.sys.id);
   const res = await client.getEntries();
-  const stringifiedData = await safeJsonStringify(res);
-  const rawData = await JSON.parse(stringifiedData);
+  const stringifiedData = safeJsonStringify(res);
+  const rawData = JSON.parse(stringifiedData);
   const data = await rawData.items.filter((e) =>
     filterList.includes(e.sys.contentType.sys.id)
   );
@@ -63,6 +47,21 @@ export const getStaticPaths = async () => {
     fallback: true,
   };
 };
+
+export async function getStaticProps({ params }) {
+  const rawItems = await client.getEntries({
+    content_type: params.category,
+    'fields.slug': params.slug,
+  });
+  const stringifiedData = await safeJsonStringify(rawItems);
+  const data = await JSON.parse(stringifiedData);
+
+  return {
+    props: {
+      object: data.items[0],
+    },
+  };
+}
 
 const ProductDetails = ({ object, categoriesData, footerData }) => {
   console.log(object);

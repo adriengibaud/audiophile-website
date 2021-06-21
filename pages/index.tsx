@@ -54,6 +54,17 @@ export async function getStaticProps() {
     content_type: 'footer',
   });
 
+  const tempCat = await client.getContentTypes({
+    description: 'products',
+  });
+  const filterList = tempCat.items.map((e) => e.sys.id);
+  const res = await client.getEntries();
+  const stringifiedRes = safeJsonStringify(res);
+  const rawData = JSON.parse(stringifiedRes);
+  const data = rawData.items.filter((e) =>
+    filterList.includes(e.sys.contentType.sys.id)
+  );
+
   return {
     props: {
       contentTypes: contentTypes.items,
@@ -65,6 +76,8 @@ export async function getStaticProps() {
       brandData: brandData.items[0],
       firstTest,
       footerData: footerData.items[0],
+      filterList,
+      data,
     },
     revalidate: 1,
   };
@@ -78,8 +91,12 @@ export default function Home({
   mediumSizeHighlight,
   smallSizeHighlight,
   brandData,
-  footerData,
+  filterList,
+  data,
 }) {
+  console.log(filterList);
+  console.log(data);
+
   return (
     <>
       {/* {contentTypes

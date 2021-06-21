@@ -56,7 +56,7 @@ const NavBar = ({ categoriesData }: { categoriesData: CategoryTypes[] }) => {
           <Menu>
             <NavButtons categoriesData={categoriesData} />
           </Menu>
-          <CartContainer />
+          <CartContainer src='/icon-cart.svg' alt='' />
         </HeaderBody>
       </Container>
       <MenuBackground onClick={() => setIsOpen(false)} isOpen={isOpen} />
@@ -141,10 +141,9 @@ const Menu = styled.div`
   }
 `;
 
-const CartContainer = styled.div`
-  width: 40px;
-  height: 40px;
-  background: red;
+const CartContainer = styled.img`
+  width: 20px;
+  height: 20px;
 `;
 
 const MenuBackground = styled.div<{ isOpen: Boolean }>`

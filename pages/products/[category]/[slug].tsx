@@ -70,7 +70,7 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {
-      object: data,
+      object: data.items[0],
       categoriesData: categoriesData.items,
       footerData: footerData.items[0],
     },
@@ -78,17 +78,16 @@ export async function getStaticProps({ params }) {
 }
 
 const ProductDetails = ({ object, categoriesData, footerData }) => {
-  console.log(footerData);
+  console.log(object);
   return (
     <div>
-      yoyoyo
+      {object.fields.title}
       <div>
         categoriesData
         {categoriesData.map((e) => (
           <h4>{e.fields.title}</h4>
         ))}
       </div>
-      <div>footerData {footerData.fields.brandInfos}</div>
     </div>
   );
 };

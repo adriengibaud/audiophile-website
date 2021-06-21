@@ -72,8 +72,19 @@ export async function getStaticProps({ params }) {
 }
 
 const ProductDetails = ({ object, categoriesData, footerData }) => {
-  console.log(object);
-  return <div>yoyoyo</div>;
+  console.log(footerData);
+  return (
+    <div>
+      yoyoyo
+      <div>
+        categoriesData
+        {categoriesData.map((e) => (
+          <h4>{e.fields.title}</h4>
+        ))}
+      </div>
+      <div>footerData {footerData.fields.brandInfos}</div>
+    </div>
+  );
 };
 
 export default ProductDetails;

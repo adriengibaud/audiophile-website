@@ -21,6 +21,21 @@ const client = createClient({
   accessToken: process.env.CONTENTFUL_ACCESS_KEY,
 });
 
+export async function getStaticProps({ params }) {
+  const rawItems = await client.getEntries({
+    content_type: params.category,
+    'fields.slug': params.slug,
+  });
+  const stringifiedData = await safeJsonStringify(rawItems);
+  const data = await JSON.parse(stringifiedData);
+
+  return {
+    props: {
+      object: data.items[0],
+    },
+  };
+}
+
 export const getStaticPaths = async () => {
   const categories = await client.getContentTypes({
     description: 'products',
@@ -48,21 +63,6 @@ export const getStaticPaths = async () => {
     fallback: true,
   };
 };
-
-export async function getStaticProps({ params }) {
-  const rawItems = await client.getEntries({
-    content_type: params.category,
-    'fields.slug': params.slug,
-  });
-  const stringifiedData = await safeJsonStringify(rawItems);
-  const data = await JSON.parse(stringifiedData);
-
-  return {
-    props: {
-      object: data.items[0],
-    },
-  };
-}
 
 const ProductDetails = ({ object, categoriesData, footerData }) => {
   console.log(object);

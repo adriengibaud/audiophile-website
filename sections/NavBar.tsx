@@ -106,7 +106,7 @@ const HamburgerButton = styled.button<{ isOpen: boolean }>`
     transition: 0.4s;
     border-radius: 10px;
     transform-origin: 1.5px;
-    background-color: red;
+    background-color: ${({ theme }) => theme.colors.white};
   }
   .bar1 {
     transform: ${({ isOpen }) => (isOpen ? 'rotate(45deg)' : 'none')};

@@ -1,6 +1,13 @@
+import { useState } from 'react';
 import { createClient } from 'contentful';
-import axios from 'axios';
+import styled from 'styled-components';
 import safeJsonStringify from 'safe-json-stringify';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
+import { EntryType } from '@/types/entry';
+import { CategoryTypes } from '@/types/category';
+import Button from '@/components/Button';
+import QuantityButton from '@/components/QuantityButton';
 
 /*export async function getAllData() {
   const res = await axios.get(
@@ -71,9 +78,125 @@ export async function getStaticProps({ params }) {
   };
 }
 
-const ProductDetails = ({ object, categoriesData, footerData }) => {
+const ProductDetails = ({
+  object,
+  categoriesData,
+}: {
+  object: EntryType;
+  categoriesData: CategoryTypes[];
+}) => {
+  const [quantity, setQuantity] = useState(0);
+
   console.log(object);
-  return <div>{object.fields.title}</div>;
+  const router = useRouter();
+
+  const addAmount = () => setQuantity(quantity + 1);
+  const decreaseAmount = () => setQuantity(quantity - 1);
+
+  return (
+    <Container>
+      <BackButton onClick={() => router.back()}>
+        <a>Go Back</a>
+      </BackButton>
+      <TopContainer>
+        <ImageContainer>
+          <Image
+            src={`https:${object.fields.productImage.fields.file.url}`}
+            layout='fill'
+            objectFit='cover'
+            quality={100}
+            className='image'
+          />
+        </ImageContainer>
+        <InfosContainer>
+          {object.fields.new && <NewProduct>new product</NewProduct>}
+          <Title>{object.fields.title}</Title>
+          <Description>{object.fields.description}</Description>
+          <Price>$ {object.fields.price}</Price>
+          <ActionContainer>
+            <QuantityButton
+              addHandler={() => addAmount()}
+              decreaseHandler={() => decreaseAmount()}
+              quantity={quantity}
+            />
+            <Button
+              variant={1}
+              text='add to cart'
+              clickHandler={() => console.log('je met dans le panier')}
+            />
+          </ActionContainer>
+        </InfosContainer>
+      </TopContainer>
+    </Container>
+  );
 };
 
 export default ProductDetails;
+
+const Container = styled.main`
+  width: 1110px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+`;
+
+const BackButton = styled.button`
+  a {
+    font: 15px Manrope;
+    line-height: 25px;
+  }
+`;
+
+const TopContainer = styled.div`
+  height: 540px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const ImageContainer = styled.div`
+  width: 560px;
+  height: 100%;
+  position: relative;
+  .image {
+    border-radius: 8px;
+  }
+`;
+
+const InfosContainer = styled.section`
+  height: 407px;
+  width: 445px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const NewProduct = styled.p`
+  color: ${({ theme }) => theme.colors.primary};
+  font: 14px Manrope;
+  letter-spacing: 10px;
+  text-transform: uppercase;
+`;
+
+const Title = styled.h2``;
+
+const Description = styled.p`
+  font: 15px Manrope;
+  line-height: 25px;
+`;
+
+const Price = styled.p`
+  font: 18px Manrope;
+  font-weight: bold;
+  letter-spacing: 1.3px;
+`;
+
+const ActionContainer = styled.div`
+  width: 300px;
+  height: 48px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;

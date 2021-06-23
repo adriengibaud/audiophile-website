@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import Categories from 'sections/Categories';
 import Brand from 'sections/Brand';
 import { BrandType } from '@/types/brand';
+import SeparationLine from 'components/SeparationLine';
 
 const client = createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
@@ -86,6 +87,7 @@ const CategoriesResult = ({
   return (
     <>
       <Mask>
+        <SeparationLine />
         <Title>{categoryTitle()}</Title>
       </Mask>
       <ResultsContainer>

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import Button from '@/components/Button';
 import { useRouter } from 'next/router';
-import Separator from '@/components/Separator';
+import SeparationLine from '@/components/SeparationLine';
 
 const Header = ({ data }: { data: HeaderTypes }) => {
   const router = useRouter();
@@ -12,6 +12,7 @@ const Header = ({ data }: { data: HeaderTypes }) => {
     <>
       <Container>
         <HeaderBody>
+          <SeparationLine />
           <InfosContainer>
             <Overline>New product</Overline>
             <Title>{data.fields.title}</Title>

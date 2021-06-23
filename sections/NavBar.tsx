@@ -77,18 +77,23 @@ const Container = styled.nav`
 `;
 
 const HeaderBody = styled.div`
-  width: auto;
+  width: 1110px;
   height: 100%;
   z-index: 100;
   max-width: 1110px;
-  margin: 0 5vw;
+  margin: 0 auto;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid white;
   @media screen and (min-width: 1200px) {
     margin: 0 auto;
+  }
+  @media screen and (max-width: 1110px) {
+    width: 689px;
+  }
+  @media screen and (max-width: 689px) {
+    width: 327px;
   }
 `;
 

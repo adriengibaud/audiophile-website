@@ -71,7 +71,9 @@ const Body = styled.div`
   }
 `;
 
-const Title = styled.h6``;
+const Title = styled.h6`
+  text-align: center;
+`;
 
 const ButtonContainer = styled.div`
   margin-bottom: 20px;

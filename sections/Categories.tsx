@@ -17,16 +17,12 @@ export default Categories;
 const Container = styled.section`
   display: flex;
   flex-direction: row;
-  min-width: 900px;
-  max-width: 1100px;
+  width: 1110px;
   height: 300px;
   justify-content: space-between;
-  margin: 0 5vw;
-  @media screen and (min-width: 1200px) {
-    margin: 0 auto;
-  }
-  @media screen and (max-width: 1000px) {
-    min-width: 600px;
+  margin: 0 auto;
+  @media screen and (max-width: 1100px) {
+    width: 689px;
   }
   @media screen and (max-width: 670px) {
     flex-direction: column;

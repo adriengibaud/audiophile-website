@@ -11,22 +11,12 @@ export interface TargetType extends EntryWithoutLink {
 
 export interface LinkTypes {
   content: {
-    content: {
-      content: [];
-      data: {
-        target: {
-          fields: TargetType;
-          metadata: {};
-          sys: Sys;
-        };
-      };
-      nodeType: string;
-    }[];
+    content: [];
     data: {
-      target: {};
+      target: EntryWithoutLink;
     };
     nodeType: string;
   }[];
-  metaData: {};
-  sys: Sys;
+  data: {};
+  nodeType: string;
 }

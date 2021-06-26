@@ -20,7 +20,7 @@ const NavButtons = ({
       <Entry onClick={() => handleClick()}>Home</Entry>
       {categoriesData.map((e) => {
         return (
-          <Entry onClick={() => handleClick(e.fields.slug)}>
+          <Entry key={e.fields.slug} onClick={() => handleClick(e.fields.slug)}>
             {e.fields.title}
           </Entry>
         );

@@ -8,20 +8,11 @@ import { EntryType } from '@/types/entry';
 import { CategoryTypes } from '@/types/category';
 import Button from '@/components/Button';
 import QuantityButton from '@/components/QuantityButton';
-
-/*export async function getAllData() {
-  const res = await axios.get(
-    'https://cdn.contentful.com/spaces/febpdaznqgsb/environments/master/entries?access_token=kYpKxaQf1BIzc9LH4HRnUrFeEwCMwm_Nx0hec_DC4Lg'
-  );
-  return res.data;
-}
-
-export async function getCategories() {
-  const res = await axios.get(
-    'https://cdn.contentful.com/spaces/febpdaznqgsb/environments/master/entries?access_token=kYpKxaQf1BIzc9LH4HRnUrFeEwCMwm_Nx0hec_DC4Lg&content_type=product'
-  );
-  return res.data;
-}*/
+import ProductGallery from 'sections/ProductGallery';
+import MayLikeProduct from 'sections/MayLikeProduct';
+import Categories from 'sections/Categories';
+import { BrandType } from '@/types/brand';
+import Brand from 'sections/Brand';
 
 const client = createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
@@ -68,12 +59,16 @@ export async function getStaticProps({ params }) {
   const footerData = await client.getEntries({
     content_type: 'footer',
   });
+  const brandData = await client.getEntries({
+    content_type: 'brandDescription',
+  });
   return {
     props: {
       object: data.items[0],
 
       categoriesData: categoriesData.items,
       footerData: footerData.items[0],
+      brandData: brandData.items[0],
     },
   };
 }
@@ -81,9 +76,11 @@ export async function getStaticProps({ params }) {
 const ProductDetails = ({
   object,
   categoriesData,
+  brandData,
 }: {
   object: EntryType;
   categoriesData: CategoryTypes[];
+  brandData: BrandType;
 }) => {
   const [quantity, setQuantity] = useState(0);
 
@@ -92,6 +89,7 @@ const ProductDetails = ({
 
   const addAmount = () => setQuantity(quantity + 1);
   const decreaseAmount = () => setQuantity(quantity - 1);
+  const { inTheBox, features, gallery, link } = object.fields;
 
   return (
     <Container>
@@ -127,6 +125,38 @@ const ProductDetails = ({
           </ActionContainer>
         </InfosContainer>
       </TopContainer>
+      <BottomContainer>
+        <FeaturesContainer>
+          <SectionTitle>features</SectionTitle>
+          <Content>
+            {features.content.map((feature, i) => {
+              if (feature.nodeType === 'paragraph')
+                return (
+                  <FeaturesParagraph key={i}>
+                    {feature.content[0].value}
+                  </FeaturesParagraph>
+                );
+            })}
+          </Content>
+        </FeaturesContainer>
+        <InTheBox>
+          <SectionTitle>in the box</SectionTitle>
+          <Content>
+            {inTheBox.content.map((e, i) => {
+              return (
+                <InTheBoxEntry key={i}>
+                  <span className='quantity'>{e.content[0].value}</span>
+                  <span className='item'>{e.content[1].value}</span>
+                </InTheBoxEntry>
+              );
+            })}
+          </Content>
+        </InTheBox>
+      </BottomContainer>
+      <ProductGallery gallery={gallery} />
+      <MayLikeProduct link={link} />
+      <Categories categories={categoriesData} />
+      <Brand brandData={brandData} />
     </Container>
   );
 };
@@ -135,9 +165,15 @@ export default ProductDetails;
 
 const Container = styled.main`
   width: 1110px;
-  margin: 0 auto;
+  margin: 50px auto;
   display: flex;
   flex-direction: column;
+  @media screen and (max-width: 1110px) {
+    width: 689px;
+  }
+  @media screen and (max-width: 689px) {
+    width: 327px;
+  }
 `;
 
 const BackButton = styled.button`
@@ -145,6 +181,7 @@ const BackButton = styled.button`
     font: 15px Manrope;
     line-height: 25px;
   }
+  margin-bottom: 50px;
 `;
 
 const TopContainer = styled.div`
@@ -154,6 +191,13 @@ const TopContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  @media screen and (max-width: 1110px) {
+    height: 480px;
+  }
+  @media screen and (max-width: 689px) {
+    flex-direction: column;
+    height: 700px;
+  }
 `;
 
 const ImageContainer = styled.div`
@@ -163,6 +207,14 @@ const ImageContainer = styled.div`
   .image {
     border-radius: 8px;
   }
+  @media screen and (max-width: 1110px) {
+    width: 281px;
+    height: 90%;
+  }
+  @media screen and (max-width: 689px) {
+    width: 100%;
+    height: 327px;
+  }
 `;
 
 const InfosContainer = styled.section`
@@ -171,6 +223,14 @@ const InfosContainer = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  @media screen and (max-width: 1110px) {
+    width: 339.5px;
+    height: 390px;
+  }
+  @media screen and (max-width: 689px) {
+    margin-top: 30px;
+    width: 100%;
+  }
 `;
 
 const NewProduct = styled.p`
@@ -180,7 +240,11 @@ const NewProduct = styled.p`
   text-transform: uppercase;
 `;
 
-const Title = styled.h2``;
+const Title = styled.h2`
+  @media screen and (max-width: 689px) {
+    font-size: 28px;
+  }
+`;
 
 const Description = styled.p`
   font: 15px Manrope;
@@ -199,4 +263,73 @@ const ActionContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+`;
+
+const BottomContainer = styled.section`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 318px;
+  margin-top: 100px;
+  @media screen and (max-width: 1110px) {
+    flex-direction: column;
+    height: auto;
+  }
+`;
+
+const InTheBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  @media screen and (max-width: 1110px) {
+    width: 90%;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 100px;
+  }
+  @media screen and (max-width: 689px) {
+    flex-direction: column;
+  }
+`;
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const InTheBoxEntry = styled.div`
+  display: grid;
+  grid-template-columns: 40px 250px;
+  grid-template-rows: 35px;
+  grid-template-areas: 'quantity item';
+  font: 15px Manrope;
+  .quantity {
+    color: ${({ theme }) => theme.colors.primary};
+    grid-area: 'quantity';
+    font-weight: bold;
+  }
+  .item {
+    grid-area: 'item';
+  }
+`;
+
+const SectionTitle = styled.h3`
+  margin-bottom: 30px;
+`;
+
+const FeaturesContainer = styled.div`
+  width: 635px;
+
+  p:not(:first-child) {
+    margin-top: 15px;
+  }
+  @media screen and (max-width: 1110px) {
+    width: 100%;
+  }
+`;
+
+const FeaturesParagraph = styled.p`
+  font: 15px Manrope;
+  line-height: 25px;
 `;

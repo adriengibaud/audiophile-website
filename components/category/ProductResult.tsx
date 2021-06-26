@@ -14,7 +14,7 @@ const ProductResult = ({
 }) => {
   return (
     <Container index={index}>
-      <ImageContainer>
+      <ImageContainer onClick={() => clickHandler(productData.fields.slug)}>
         <Image
           src={`https:${productData.fields.productImage.fields.file.url}`}
           layout='fill'
@@ -62,6 +62,7 @@ const ImageContainer = styled.div`
   width: 540px;
   height: 100%;
   position: relative;
+  cursor: pointer;
   .image {
     border-radius: 8px;
   }

@@ -86,9 +86,6 @@ const HeaderBody = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  @media screen and (min-width: 1200px) {
-    margin: 0 auto;
-  }
   @media screen and (max-width: 1110px) {
     width: 689px;
   }
@@ -107,7 +104,7 @@ const HamburgerButton = styled.button<{ isOpen: boolean }>`
   .bar3 {
     width: 2rem;
     height: 0.25rem;
-    margin: 6px 20px;
+    margin: 6px 20px 6px 0px;
     transition: 0.4s;
     border-radius: 10px;
     transform-origin: 1.5px;

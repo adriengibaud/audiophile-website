@@ -1,5 +1,11 @@
 export interface Sys {
-  contentType: {};
+  contentType: {
+    sys: {
+      id: string;
+      linkType: string;
+      type: string;
+    };
+  };
   createdAt: string;
   environment: {
     sys: {

@@ -2,8 +2,16 @@ import { LinkTypes } from '@/types/link';
 import styled from 'styled-components';
 import Image from 'next/image';
 import Button from '@/components/Button';
+import { useRouter } from 'next/router';
 
 const MayLikeProduct = ({ link }: { link: LinkTypes }) => {
+  const router = useRouter();
+
+  const redirectToItem = (category, slug) => {
+    console.log(category);
+    router.push('/products/' + category + '/' + slug);
+  };
+
   return (
     <Container>
       <SectionTitle>you may also like</SectionTitle>
@@ -11,7 +19,7 @@ const MayLikeProduct = ({ link }: { link: LinkTypes }) => {
         {link.content
           .filter((link) => link.nodeType === 'embedded-entry-block')
           .map((link) => (
-            <Entry>
+            <Entry key={link.data.target.fields.slug}>
               <EntryImage>
                 <Image
                   src={`https:${link.data.target.fields.productImage.fields.file.url}`}
@@ -25,7 +33,12 @@ const MayLikeProduct = ({ link }: { link: LinkTypes }) => {
               <Button
                 variant={1}
                 text='see product'
-                clickHandler={() => console.log('coucou')}
+                clickHandler={() =>
+                  redirectToItem(
+                    link.data.target.sys.contentType.sys.id,
+                    link.data.target.fields.slug
+                  )
+                }
               />
             </Entry>
           ))}

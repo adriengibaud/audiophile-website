@@ -106,6 +106,15 @@ export default function Home({
             <a>{e.name}</a>
           </Link>
         ))}*/}
+      <Head>
+        <title>Audiophile</title>
+        <link rel='preconnect' href='https://fonts.googleapis.com' />
+        <link rel='preconnect' href='https://fonts.gstatic.com' />
+        <link
+          href='https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap'
+          rel='stylesheet'
+        />
+      </Head>
       <Header data={headerData} />
       <Categories categories={categoriesData} />
       <Highlight

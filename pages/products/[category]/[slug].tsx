@@ -1,6 +1,7 @@
+import styled from 'styled-components';
+import Head from 'next/head';
 import { useState } from 'react';
 import { createClient } from 'contentful';
-import styled from 'styled-components';
 import safeJsonStringify from 'safe-json-stringify';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -93,6 +94,15 @@ const ProductDetails = ({
 
   return (
     <>
+      <Head>
+        <title>Audiophile</title>
+        <link rel='preconnect' href='https://fonts.googleapis.com' />
+        <link rel='preconnect' href='https://fonts.gstatic.com' />
+        <link
+          href='https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap'
+          rel='stylesheet'
+        />
+      </Head>
       <Container>
         <BackButton onClick={() => router.back()}>
           <a>Go Back</a>

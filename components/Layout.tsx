@@ -17,12 +17,9 @@ const Layout = ({
 }) => {
   return (
     <>
-      <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <NavBar categoriesData={categoriesData} />
-        {children}
-        <Footer footerData={footerData} categoriesData={categoriesData} />
-      </ThemeProvider>
+      <NavBar categoriesData={categoriesData} />
+      {children}
+      <Footer footerData={footerData} categoriesData={categoriesData} />
     </>
   );
 };

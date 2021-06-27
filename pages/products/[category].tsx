@@ -1,9 +1,9 @@
+import styled from 'styled-components';
 import ProductResult from '@/components/category/ProductResult';
+import Head from 'next/head';
 import { CategoryContentTypes, CategoryTypes } from '@/types/category';
 import { createClient } from 'contentful';
-import Link from 'next/link';
 import safeJsonStringify from 'safe-json-stringify';
-import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import Categories from 'sections/Categories';
 import Brand from 'sections/Brand';
@@ -86,6 +86,15 @@ const CategoriesResult = ({
 
   return (
     <>
+      <Head>
+        <title>Audiophile</title>
+        <link rel='preconnect' href='https://fonts.googleapis.com' />
+        <link rel='preconnect' href='https://fonts.gstatic.com' />
+        <link
+          href='https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap'
+          rel='stylesheet'
+        />
+      </Head>
       <Mask>
         <SeparationLine />
         <Title>{categoryTitle()}</Title>

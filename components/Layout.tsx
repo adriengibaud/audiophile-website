@@ -16,12 +16,14 @@ const Layout = ({
   footerData: FooterTypes;
 }) => {
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <GlobalStyle />
-      <NavBar categoriesData={categoriesData} />
-      {children}
-      <Footer footerData={footerData} categoriesData={categoriesData} />
-    </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <NavBar categoriesData={categoriesData} />
+        {children}
+        <Footer footerData={footerData} categoriesData={categoriesData} />
+      </ThemeProvider>
+    </>
   );
 };
 

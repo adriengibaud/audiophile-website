@@ -92,72 +92,74 @@ const ProductDetails = ({
   const { inTheBox, features, gallery, link } = object.fields;
 
   return (
-    <Container>
-      <BackButton onClick={() => router.back()}>
-        <a>Go Back</a>
-      </BackButton>
-      <TopContainer>
-        <ImageContainer>
-          <Image
-            src={`https:${object.fields.productImage.fields.file.url}`}
-            layout='fill'
-            objectFit='cover'
-            quality={100}
-            className='image'
-          />
-        </ImageContainer>
-        <InfosContainer>
-          {object.fields.new && <NewProduct>new product</NewProduct>}
-          <Title>{object.fields.title}</Title>
-          <Description>{object.fields.description}</Description>
-          <Price>$ {object.fields.price}</Price>
-          <ActionContainer>
-            <QuantityButton
-              addHandler={() => addAmount()}
-              decreaseHandler={() => decreaseAmount()}
-              quantity={quantity}
+    <>
+      <Container>
+        <BackButton onClick={() => router.back()}>
+          <a>Go Back</a>
+        </BackButton>
+        <TopContainer>
+          <ImageContainer>
+            <Image
+              src={`https:${object.fields.productImage.fields.file.url}`}
+              layout='fill'
+              objectFit='cover'
+              quality={100}
+              className='image'
             />
-            <Button
-              variant={1}
-              text='add to cart'
-              clickHandler={() => console.log('je met dans le panier')}
-            />
-          </ActionContainer>
-        </InfosContainer>
-      </TopContainer>
-      <BottomContainer>
-        <FeaturesContainer>
-          <SectionTitle>features</SectionTitle>
-          <Content>
-            {features.content.map((feature, i) => {
-              if (feature.nodeType === 'paragraph')
+          </ImageContainer>
+          <InfosContainer>
+            {object.fields.new && <NewProduct>new product</NewProduct>}
+            <Title>{object.fields.title}</Title>
+            <Description>{object.fields.description}</Description>
+            <Price>$ {object.fields.price}</Price>
+            <ActionContainer>
+              <QuantityButton
+                addHandler={() => addAmount()}
+                decreaseHandler={() => decreaseAmount()}
+                quantity={quantity}
+              />
+              <Button
+                variant={1}
+                text='add to cart'
+                clickHandler={() => console.log('je met dans le panier')}
+              />
+            </ActionContainer>
+          </InfosContainer>
+        </TopContainer>
+        <BottomContainer>
+          <FeaturesContainer>
+            <SectionTitle>features</SectionTitle>
+            <Content>
+              {features.content.map((feature, i) => {
+                if (feature.nodeType === 'paragraph')
+                  return (
+                    <FeaturesParagraph key={i}>
+                      {feature.content[0].value}
+                    </FeaturesParagraph>
+                  );
+              })}
+            </Content>
+          </FeaturesContainer>
+          <InTheBox>
+            <SectionTitle>in the box</SectionTitle>
+            <Content>
+              {inTheBox.content.map((e, i) => {
                 return (
-                  <FeaturesParagraph key={i}>
-                    {feature.content[0].value}
-                  </FeaturesParagraph>
+                  <InTheBoxEntry key={i}>
+                    <span className='quantity'>{e.content[0].value}</span>
+                    <span className='item'>{e.content[1].value}</span>
+                  </InTheBoxEntry>
                 );
-            })}
-          </Content>
-        </FeaturesContainer>
-        <InTheBox>
-          <SectionTitle>in the box</SectionTitle>
-          <Content>
-            {inTheBox.content.map((e, i) => {
-              return (
-                <InTheBoxEntry key={i}>
-                  <span className='quantity'>{e.content[0].value}</span>
-                  <span className='item'>{e.content[1].value}</span>
-                </InTheBoxEntry>
-              );
-            })}
-          </Content>
-        </InTheBox>
-      </BottomContainer>
-      <ProductGallery gallery={gallery} />
-      <MayLikeProduct link={link} />
+              })}
+            </Content>
+          </InTheBox>
+        </BottomContainer>
+        <ProductGallery gallery={gallery} />
+        <MayLikeProduct link={link} />
+      </Container>
       <Categories categories={categoriesData} />
       <Brand brandData={brandData} />
-    </Container>
+    </>
   );
 };
 

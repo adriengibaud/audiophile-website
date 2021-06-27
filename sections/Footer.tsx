@@ -178,9 +178,9 @@ const LinkContainer = styled.div`
 `;
 
 const LinkIcon = styled.button`
-  width: 20px;
+  width: 24px;
   position: relative;
-  line-height: 20px;
+  line-height: 24px;
   .image {
     fill: ${({ theme }) => theme.colors.white};
     font-size: 24px;

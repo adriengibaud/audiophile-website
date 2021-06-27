@@ -35,10 +35,15 @@ const Category = ({ category }: { category: CategoryTypes }) => {
 export default Category;
 
 const Container = styled.div`
-  width: 32%;
+  width: 350px;
   height: 284px;
-  @media screen and (max-width: 670px) {
-    width: 100%;
+  @media screen and (max-width: 1110px) {
+    width: 223px;
+    height: 217px;
+  }
+  @media screen and (max-width: 689px) {
+    width: 327px;
+    height: 217px;
   }
 `;
 
@@ -57,16 +62,16 @@ const Body = styled.div`
     transform: translateY(-40px);
     margin-bottom: -40px;
   }
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1110px) {
     height: 160px;
     img {
       width: 130px;
     }
   }
-  @media screen and (max-width: 670px) {
-    height: 200px;
+  @media screen and (max-width: 689px) {
+    height: 165px;
     img {
-      width: 170px;
+      width: 135px;
     }
   }
 `;

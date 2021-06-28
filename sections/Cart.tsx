@@ -75,19 +75,32 @@ const CartContainer = styled.div`
   min-height: 400px;
   background: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
-  transform: translate(860px, 30px);
+  transform: translate(65vw, 30px);
+  @media screen and (max-width: 1110px) {
+    transform: translate(46vw, 30px);
+  }
+  @media screen and (max-width: 700px) {
+    transform: translate(0, 30px);
+    right: 10px;
+    width: calc(100vw - 20px);
+  }
 `;
 
 const Body = styled.div`
   width: 337px;
   height: 100%;
   margin: 20px;
+  @media screen and (max-width: 700px) {
+    margin: 15px auto;
+    width: 307px;
+  }
 `;
 
 const TopSection = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  width: 100%;
 `;
 
 const CartTitle = styled.h6``;

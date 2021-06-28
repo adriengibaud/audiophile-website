@@ -18,7 +18,7 @@ const ProductResult = ({
         <Image
           src={`https:${productData.fields.productImage.fields.file.url}`}
           layout='fill'
-          objectFit='contain'
+          objectFit='cover'
           quality={100}
           className='image'
         />
@@ -49,12 +49,12 @@ const Container = styled.section<{ index: number }>`
   align-items: center;
   @media screen and (max-width: 1110px) {
     flex-direction: column;
-    width: 689px;
-    height: 706px;
+    width: 500px;
+    height: 756px;
   }
   @media screen and (max-width: 689px) {
     width: 327px;
-    height: 724px;
+    height: auto;
   }
 `;
 
@@ -67,6 +67,10 @@ const ImageContainer = styled.div`
     border-radius: 8px;
   }
   @media screen and (max-width: 1110px) {
+    width: 500px;
+    height: 400px;
+  }
+  @media screen and (max-width: 689px) {
     width: 100%;
     height: 352px;
   }
@@ -80,13 +84,14 @@ const InfosContainer = styled.div`
   justify-content: space-between;
   @media screen and (max-width: 1110px) {
     height: 42%;
-    width: 572px;
+    width: 100%;
     text-align: center;
     align-items: center;
   }
   @media screen and (max-width: 689px) {
     width: 100%;
-    height: 50%;
+    height: auto;
+    margin-top: 40px;
   }
 `;
 
@@ -95,17 +100,26 @@ const NewProduct = styled.p`
   font: 14px Manrope;
   letter-spacing: 10px;
   text-transform: uppercase;
+  @media screen and (max-width: 689px) {
+    margin-bottom: 20px;
+  }
 `;
 
 const Title = styled.h2`
   width: 65%;
   @media screen and (max-width: 689px) {
     width: 90%;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
   }
 `;
 
 const Description = styled.p`
+  opacity: 60%;
   @media screen and (max-width: 689px) {
     width: 80%;
+    font-size: 15px;
+    margin-bottom: 20px;
   }
 `;

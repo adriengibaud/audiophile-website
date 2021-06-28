@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { CategoryTypes } from '@/types/category';
 import NavButtons from '@/components/NavButtons';
+import Cart from './Cart';
 
 const NavBar = ({ categoriesData }: { categoriesData: CategoryTypes[] }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
   const changeMenuState = () => setIsOpen(!isOpen);
   const router = useRouter();
 
@@ -16,6 +18,29 @@ const NavBar = ({ categoriesData }: { categoriesData: CategoryTypes[] }) => {
     else router.push('/');
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      window.scrollTo(0, 0);
+      document.body.style.overflowY = 'hidden';
+      if (cartOpen) {
+        setCartOpen(false);
+      }
+    } else if (!isOpen && !cartOpen) {
+      document.body.style.overflowY = 'scroll';
+    }
+  }, [isOpen]);
+  useEffect(() => {
+    if (cartOpen) {
+      window.scrollTo(0, 0);
+      document.body.style.overflowY = 'hidden';
+      if (isOpen) {
+        setIsOpen(false);
+      }
+    } else if (!isOpen && !cartOpen) {
+      document.body.style.overflowY = 'scroll';
+    }
+  }, [cartOpen]);
 
   const MenuBody = () => {
     return (
@@ -56,13 +81,18 @@ const NavBar = ({ categoriesData }: { categoriesData: CategoryTypes[] }) => {
           <Menu>
             <NavButtons categoriesData={categoriesData} />
           </Menu>
-          <CartContainer src='/icon-cart.svg' alt='' />
+          <CartContainer
+            onClick={() => setCartOpen(!cartOpen)}
+            src='/icon-cart.svg'
+            alt=''
+          />
         </HeaderBody>
       </Container>
       <MenuBackground onClick={() => setIsOpen(false)} isOpen={isOpen} />
       <MenuContainer isOpen={isOpen}>
         <EntryContainer>{MenuBody()}</EntryContainer>
       </MenuContainer>
+      <Cart cartOpen={cartOpen} clickHandler={() => setCartOpen(false)} />
     </>
   );
 };
@@ -80,7 +110,6 @@ const HeaderBody = styled.div`
   width: 1110px;
   height: 100%;
   z-index: 100;
-  max-width: 1110px;
   margin: 0 auto;
   display: flex;
   flex-direction: row;

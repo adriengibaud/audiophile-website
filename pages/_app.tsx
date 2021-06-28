@@ -1,3 +1,5 @@
+import { store } from 'app/store';
+import { Provider } from 'react-redux';
 import styled, { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from 'styles/GlobalStyle';
 import { theme } from 'styles/theme';
@@ -9,12 +11,14 @@ function MyApp({ Component, pageProps }) {
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Layout
-          categoriesData={pageProps.categoriesData}
-          footerData={pageProps.footerData}
-        >
-          <Component {...pageProps} />
-        </Layout>
+        <Provider store={store}>
+          <Layout
+            categoriesData={pageProps.categoriesData}
+            footerData={pageProps.footerData}
+          >
+            <Component {...pageProps} />
+          </Layout>
+        </Provider>
       </ThemeProvider>
     </>
   );

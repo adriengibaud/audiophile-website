@@ -4,14 +4,20 @@ const QuantityButton = ({
   addHandler,
   decreaseHandler,
   quantity,
+  variant,
 }: {
   addHandler: Function;
   decreaseHandler: Function;
   quantity: number;
+  variant: number;
 }) => {
+  const decreaseQuantity = () => {
+    if (quantity > 0) decreaseHandler();
+  };
+
   return (
-    <Container>
-      <Button onClick={() => decreaseHandler()}>-</Button>
+    <Container variant={variant}>
+      <Button onClick={() => decreaseQuantity()}>-</Button>
       {quantity}
       <Button onClick={() => addHandler()}>+</Button>
     </Container>
@@ -20,9 +26,11 @@ const QuantityButton = ({
 
 export default QuantityButton;
 
-const Container = styled.div`
-  width: 120px;
-  height: 48px;
+const Container = styled.div<{ variant: number }>`
+  width: ${({ variant }) =>
+    (variant === 1 && '120px') || (variant === 2 && '96px')};
+  height: ${({ variant }) =>
+    (variant === 1 && '48px') || (variant === 2 && '32px')};
   background: ${({ theme }) => theme.colors.secondaryLight};
   display: flex;
   flex-direction: row;

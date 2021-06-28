@@ -117,7 +117,7 @@ const CategoriesResult = ({
 export default CategoriesResult;
 
 const Mask = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 236px;
   background: ${({ theme }) => theme.colors.secondary};
   display: flex;

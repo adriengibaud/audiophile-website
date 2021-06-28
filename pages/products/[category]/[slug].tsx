@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createClient } from 'contentful';
 import safeJsonStringify from 'safe-json-stringify';
 import { useRouter } from 'next/router';
@@ -14,6 +14,8 @@ import MayLikeProduct from 'sections/MayLikeProduct';
 import Categories from 'sections/Categories';
 import { BrandType } from '@/types/brand';
 import Brand from 'sections/Brand';
+import { useDispatch, useSelector } from 'react-redux';
+import { add } from 'app/reducers/cartReducer';
 
 const client = createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
@@ -83,15 +85,14 @@ const ProductDetails = ({
   categoriesData: CategoryTypes[];
   brandData: BrandType;
 }) => {
-  const [quantity, setQuantity] = useState(0);
-
-  console.log(object);
+  const [quantity, setQuantity] = useState(1);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const addAmount = () => setQuantity(quantity + 1);
   const decreaseAmount = () => setQuantity(quantity - 1);
   const { inTheBox, features, gallery, link } = object.fields;
-
+  console.log(object);
   return (
     <>
       <Head>
@@ -124,6 +125,7 @@ const ProductDetails = ({
             <Price>$ {object.fields.price}</Price>
             <ActionContainer>
               <QuantityButton
+                variant={1}
                 addHandler={() => addAmount()}
                 decreaseHandler={() => decreaseAmount()}
                 quantity={quantity}
@@ -131,7 +133,19 @@ const ProductDetails = ({
               <Button
                 variant={1}
                 text='add to cart'
-                clickHandler={() => console.log('je met dans le panier')}
+                clickHandler={() => {
+                  dispatch(
+                    add({
+                      slug: object.fields.slug,
+                      quantity,
+                      productImage: object.fields.productImage.fields.file.url,
+                      price: object.fields.price,
+                      name: object.fields.title,
+                      category: object.sys.contentType.sys.id,
+                    })
+                  );
+                  setQuantity(1);
+                }}
               />
             </ActionContainer>
           </InfosContainer>

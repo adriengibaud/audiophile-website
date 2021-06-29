@@ -74,7 +74,6 @@ const Container = styled.div`
   height: 365px;
   background: ${({ theme }) => theme.colors.secondary};
   display: inline-block;
-  margin-top: 50px;
   @media screen and (max-width: 1110px) {
     height: 400px;
   }

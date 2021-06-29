@@ -5,7 +5,13 @@ import QuantityButton from '../QuantityButton';
 import { useDispatch } from 'react-redux';
 import { add, remove } from 'app/reducers/cartReducer';
 
-const CartItem = ({ item }: { item: ProductCart }) => {
+const CartItem = ({
+  item,
+  summary,
+}: {
+  item: ProductCart;
+  summary: boolean;
+}) => {
   const { name, productImage, category, price, quantity, slug } = item;
   const dispatch = useDispatch();
 
@@ -28,16 +34,19 @@ const CartItem = ({ item }: { item: ProductCart }) => {
           className='image'
         />
       </ImageContainer>
-      <InfosContainer>
+      <InfosContainer summary={summary}>
         <Title>{removeCategory()}</Title>
         <Price>$ {price}</Price>
       </InfosContainer>
-      <QuantityButton
-        variant={2}
-        quantity={quantity}
-        decreaseHandler={() => dispatch(remove({ slug }))}
-        addHandler={() => dispatch(add({ slug, quantity: 1 }))}
-      />
+      {!summary && (
+        <QuantityButton
+          variant={2}
+          quantity={quantity}
+          decreaseHandler={() => dispatch(remove({ slug }))}
+          addHandler={() => dispatch(add({ slug, quantity: 1 }))}
+        />
+      )}
+      {summary && <Quantity>x{quantity}</Quantity>}
     </Container>
   );
 };
@@ -61,9 +70,9 @@ const ImageContainer = styled.div`
   }
 `;
 
-const InfosContainer = styled.div`
+const InfosContainer = styled.div<{ summary: boolean }>`
   height: 100%;
-  width: 120px;
+  width: ${({ summary }) => (summary ? '60%' : '120px')};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -80,4 +89,10 @@ const Price = styled.p`
   font: 14px Manrope;
   font-weight: bold;
   opacity: 70%;
+`;
+
+const Quantity = styled.p`
+  font: 15px Manrope;
+  font-weight: bold;
+  opacity: 50%;
 `;

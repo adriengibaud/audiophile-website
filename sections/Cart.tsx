@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { removeAll, selectCart } from 'app/reducers/cartReducer';
 import Button from '@/components/Button';
 import CartItem from '@/components/cart/CartItem';
+import { useRouter } from 'next/router';
 
 const Cart = ({
   cartOpen,
@@ -12,6 +13,7 @@ const Cart = ({
   cartOpen: boolean;
   clickHandler: Function;
 }) => {
+  const router = useRouter();
   const cart = useSelector(selectCart);
   const dispatch = useDispatch();
   console.log(cart);
@@ -37,7 +39,7 @@ const Cart = ({
           </TopSection>
           <ItemSection>
             {cart.map((item) => {
-              return <CartItem key={item.slug} item={item} />;
+              return <CartItem summary={false} key={item.slug} item={item} />;
             })}
           </ItemSection>
           <TotalContainer>
@@ -47,7 +49,10 @@ const Cart = ({
           <Button
             variant={4}
             text='checkout'
-            clickHandler={() => console.log('yo')}
+            clickHandler={() => {
+              clickHandler();
+              router.push('/checkout/');
+            }}
           />
         </Body>
       </CartContainer>

@@ -82,6 +82,7 @@ const RadioButton = styled.input`
     height: 22px;
     background: white;
     position: absolute;
+    transform: translate(-1px -1px);
     z-index: 10;
     border-radius: 50%;
     border: 1px solid rgba(0, 0, 0, 0.5);
@@ -100,6 +101,7 @@ const RadioButton = styled.input`
     );
     z-index: 10;
     border-radius: 50%;
+    transform: translate(-1px -1px);
     border: 1px solid rgba(0, 0, 0, 0.5);
   }
 `;

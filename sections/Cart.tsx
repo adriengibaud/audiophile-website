@@ -73,6 +73,7 @@ const CartContainer = styled.div`
   width: 377px;
   height: auto;
   min-height: 400px;
+  max-height: 80vh;
   background: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
   transform: translate(65vw, 30px);
@@ -121,10 +122,14 @@ const ItemSection = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 195px;
-  max-height: 60vh;
+
+  overflow-y: auto;
   width: 100%;
   section:not(:first-child) {
     margin-top: 15px;
+  }
+  @media screen and (max-width: 1110px) {
+    max-height: 50vh;
   }
 `;
 

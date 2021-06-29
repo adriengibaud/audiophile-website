@@ -73,6 +73,7 @@ const Title = styled.p`
   font: 15px Manrope;
   font-weight: bold;
   line-height: 25px;
+  text-transform: uppercase;
 `;
 
 const Price = styled.p`

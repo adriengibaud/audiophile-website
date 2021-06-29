@@ -70,7 +70,7 @@ const ImageContainer = styled.div`
   height: 80%;
   z-index: 3;
   margin: auto 0 auto 5%;
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1110px) {
     width: 100%;
     height: 85%;
     margin: auto;
@@ -85,10 +85,7 @@ const InfosContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  @media screen and (max-width: 1200px) {
-    margin-left: 5vh;
-  }
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1110px) {
     position: absolute;
     z-index: 5;
     align-items: center;

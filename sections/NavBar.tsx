@@ -2,16 +2,20 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { CategoryTypes } from '@/types/category';
 import NavButtons from '@/components/NavButtons';
+
 import Cart from './Cart';
+import { selectCart } from 'app/reducers/cartReducer';
 
 const NavBar = ({ categoriesData }: { categoriesData: CategoryTypes[] }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const changeMenuState = () => setIsOpen(!isOpen);
   const router = useRouter();
+  const cart = useSelector(selectCart);
 
   const handleClick = (slug = '') => {
     if (slug) router.push('/products/' + slug.slice(0, -1));
@@ -45,6 +49,9 @@ const NavBar = ({ categoriesData }: { categoriesData: CategoryTypes[] }) => {
   const MenuBody = () => {
     return (
       <>
+        <MenuEntry onClick={() => handleClick()}>
+          <TextEntry>Home</TextEntry>
+        </MenuEntry>
         {categoriesData &&
           categoriesData.map((e) => (
             <MenuEntry
@@ -76,7 +83,9 @@ const NavBar = ({ categoriesData }: { categoriesData: CategoryTypes[] }) => {
             <div className='bar3'></div>
           </HamburgerButton>
           <ImageContainer>
-            <Image src='/logo.svg' layout='fill' />
+            <Link href='/'>
+              <Image src='/logo.svg' layout='fill' />
+            </Link>
           </ImageContainer>
           <Menu>
             <NavButtons categoriesData={categoriesData} />
@@ -86,6 +95,7 @@ const NavBar = ({ categoriesData }: { categoriesData: CategoryTypes[] }) => {
             src='/icon-cart.svg'
             alt=''
           />
+          {cart.length > 0 && <QuantityInCart>{cart.length}</QuantityInCart>}
         </HeaderBody>
       </Container>
       <MenuBackground onClick={() => setIsOpen(false)} isOpen={isOpen} />
@@ -125,7 +135,7 @@ const HeaderBody = styled.div`
 
 const HamburgerButton = styled.button<{ isOpen: boolean }>`
   display: none;
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1110px) {
     display: inline;
   }
   .bar1,
@@ -156,7 +166,7 @@ const ImageContainer = styled.div`
   position: relative;
   width: 143px;
   height: 25px;
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1110px) {
     margin-right: auto;
   }
 `;
@@ -167,14 +177,34 @@ const Menu = styled.div`
   flex-direction: row;
   justify-content: space-between;
   color: white;
-  @media screen and (max-width: 1000px) {
+  margin: 0 auto;
+  @media screen and (max-width: 1110px) {
     display: none;
   }
 `;
 
 const CartContainer = styled.img`
+  width: 40px;
+  height: 30px;
+  padding-right: 10px;
+  max-width: 40px;
+`;
+
+const QuantityInCart = styled.span`
   width: 20px;
   height: 20px;
+  background: red;
+  border-radius: 50%;
+  color: white;
+  vertical-align: top;
+  margin-left: -20px;
+  transform: translateY(9px);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  @media screen and (min-width: 1110px) {
+  }
 `;
 
 const MenuBackground = styled.div<{ isOpen: Boolean }>`
@@ -190,10 +220,10 @@ const MenuBackground = styled.div<{ isOpen: Boolean }>`
 `;
 
 const MenuContainer = styled.div<{ isOpen: boolean }>`
-  height: 200px;
+  height: calc(100vh - 100px);
   position: absolute;
   background: white;
-  width: 100vw;
+  width: 300px;
   z-index: 20;
   top: 99px;
   color: black;
@@ -202,30 +232,23 @@ const MenuContainer = styled.div<{ isOpen: boolean }>`
   transform: ${({ isOpen }) =>
     isOpen ? 'translateX(0)' : 'translateX(-100%)'};
   transition: transform 0.4s;
-  @media screen and (max-width: 470px) {
-    height: 340px;
-  }
 `;
 
 const EntryContainer = styled.div`
   width: 80%;
   height: 450px;
   display: flex;
-  flex-direction: row;
-  margin: 50px auto 0 auto;
+  flex-direction: column;
+  margin: 50px auto 0 25px;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px;
-  @media screen and (max-width: 470px) {
-    justify-content: center;
-    gap: 25px;
-  }
 `;
 
 const MenuEntry = styled.button`
   height: 100px;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
 `;
@@ -236,7 +259,7 @@ const EntryImageContainer = styled.div`
   position: relative;
   height: 100px;
   width: 100px;
-  @media screen and (min-width: 1000px) {
+  @media screen and (min-width: 1110px) {
     display: none;
   }
 `;

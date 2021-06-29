@@ -73,10 +73,8 @@ const CategoriesResult = ({
   console.log(category);
 
   const categoryTitle = () => {
-    if (product.total > 1) {
-      const categoryPlurial = category + 's';
-      return categoryPlurial;
-    } else return category;
+    const categoryPlurial = category + 's';
+    return categoryPlurial;
   };
 
   const redirectToItem = (slug) => {

@@ -9,6 +9,8 @@ const Input = ({
   type,
   checked,
   status,
+  name,
+  error,
 }: {
   value: string | number | string[];
   onChange: Function;
@@ -17,13 +19,18 @@ const Input = ({
   type: string;
   checked?: boolean;
   status?: string;
+  name?: string;
+  error?: string;
 }) => {
   return (
     <Container size={size}>
       {type === 'text' && (
         <Label type={type}>
-          {label}
+          <span className='label'>
+            {label} {error && <span className='error'>{error}</span>}
+          </span>
           <Box
+            error={error}
             type='text'
             value={value}
             onChange={(e) => onChange(e.target.value)}
@@ -32,13 +39,19 @@ const Input = ({
       )}
       {type === 'radio' && (
         <RadioBox size={size} checked={checked} onClick={() => onChange(value)}>
-          <RadioButton
-            checked={checked}
-            type='radio'
-            value={value}
-            onChange={() => onChange(value)}
-          />
-          <Label type={type}>{label} </Label>
+          <RadioLabel>
+            <span className='radio__input'>
+              <RadioButton
+                checked={checked}
+                type='radio'
+                value={value}
+                onChange={() => onChange(value)}
+                name={name}
+              />
+              <span className='radio__control'></span>
+            </span>
+            <span className='radio__label'>{label}</span>
+          </RadioLabel>
         </RadioBox>
       )}
     </Container>
@@ -58,6 +71,15 @@ const Label = styled.label<{ type: string }>`
   font: 12px Manrope;
   font-weight: bold;
   letter-spacing: -0.21px;
+  .label {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .error {
+      color: red;
+    }
+  }
 `;
 
 const RadioBox = styled.div<{ size: string; checked: boolean }>`
@@ -72,44 +94,53 @@ const RadioBox = styled.div<{ size: string; checked: boolean }>`
   border-radius: 8px;
 `;
 
-const RadioButton = styled.input`
-  width: 22px;
-  height: 22px;
-  margin: 0 20px 0 20px;
-  :after {
-    content: '';
-    width: 22px;
-    height: 22px;
-    background: white;
-    position: absolute;
-    transform: translate(-10px -10px);
-    z-index: 10;
-    border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.5);
+const RadioLabel = styled.label`
+  display: grid;
+  grid-template-columns: min-content auto;
+  grid-gap: 0.5em;
+  .radio__input {
+    display: flex;
+    input + .radio__control::before {
+      content: '';
+      width: 0.6em;
+      height: 0.6em;
+      box-shadow: inset 0.5em 0.5em ${({ theme }) => theme.colors.primary};
+      border-radius: 50%;
+      transition: 180ms transform ease-in-out;
+      transform: scale(0);
+    }
+    input:checked + .radio__control::before {
+      transform: scale(1);
+    }
+    .radio__control {
+      display: grid;
+      place-items: center;
+      width: 1em;
+      height: 1em;
+      border-radius: 50%;
+      border: 0.1em solid ${({ theme }) => theme.colors.primary};
+      transform: translateY(-0.05em);
+    }
   }
-  :checked:after {
-    content: '';
-    width: 22px;
-    height: 22px;
-    background: rgb(255, 255, 255);
-    background: radial-gradient(
-      circle,
-      rgba(255, 255, 255, 1) 0%,
-      rgba(216, 125, 74, 1) 0%,
-      rgba(216, 125, 74, 1) 38%,
-      rgba(255, 255, 255, 1) 38%
-    );
-    z-index: 10;
-    border-radius: 50%;
-    transform: translate(-10px -10px);
-    border: 1px solid rgba(0, 0, 0, 0.5);
+  .radio__label {
+    font: 12px Manrope;
+    font-weight: bold;
+    letter-spacing: -0.21px;
+    line-height: 1;
   }
 `;
 
-const Box = styled.input`
+const RadioButton = styled.input`
+  opacity: 0;
+  width: 0;
+  height: 0;
+`;
+
+const Box = styled.input<{ error: string | null }>`
   width: 100%;
   height: 56px;
-  border: 2px solid ${({ theme }) => theme.colors.secondaryLight};
+  border: 2px solid
+    ${({ theme, error }) => (error ? 'red' : theme.colors.secondaryLight)};
   border-radius: 8px;
   margin-bottom: 10px;
   margin-top: 5px;

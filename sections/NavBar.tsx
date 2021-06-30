@@ -225,7 +225,7 @@ const MenuContainer = styled.div<{ isOpen: boolean }>`
   background: white;
   width: 300px;
   z-index: 20;
-  top: 99px;
+  top: 100px;
   color: black;
   display: flex;
   flex-direction: column;
@@ -239,7 +239,7 @@ const EntryContainer = styled.div`
   height: 450px;
   display: flex;
   flex-direction: column;
-  margin: 50px auto 0 25px;
+  margin: 0px auto 0 25px;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px;

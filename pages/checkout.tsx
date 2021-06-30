@@ -6,6 +6,9 @@ import Input from '@/components/Input';
 import { selectCart } from 'app/reducers/cartReducer';
 import Cart from '@/components/checkout/Cart';
 import Button from '@/components/Button';
+import checkoutValidation from 'utils/checkoutValidation';
+import { CheckoutInformationsType } from '@/types/checkoutInformations';
+import OrderConfirmation from 'sections/OrderConfirmation';
 
 const client = createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
@@ -29,7 +32,7 @@ export async function getStaticProps() {
 }
 
 const checkout = () => {
-  const [state, setState] = useState({
+  const [state, setState] = useState<CheckoutInformationsType>({
     name: '',
     email: '',
     phone: '',
@@ -37,10 +40,33 @@ const checkout = () => {
     zipCode: '',
     city: '',
     country: '',
-    paymentMethod: '',
+    paymentMethod: 'emoney',
     eMoneyNumber: '',
     eMoneyPin: '',
   });
+
+  const [validated, setValidated] = useState<string | boolean>(true);
+
+  const [error, setError] = useState({
+    name: null,
+    email: null,
+    phone: null,
+    adress: null,
+    zipCode: null,
+    city: null,
+    country: null,
+    eMoneyNumber: null,
+    eMoneyPin: null,
+  });
+
+  const validation = () => {
+    setValidated('pending');
+    setError(checkoutValidation(state));
+    if (!Object.keys(error).every((e) => error[e] === null))
+      setValidated(false);
+    else setValidated(true);
+  };
+
   const cart = useSelector(selectCart);
 
   const calcSummarySize = () => {
@@ -48,139 +74,152 @@ const checkout = () => {
       return 360 + 10 + 79 * cart.length;
     } else return 140;
   };
-  console.log(calcSummarySize());
+
   return (
-    <Body>
-      <BackButton>Go Back</BackButton>
-      <Container>
-        <CheckOutContainer>
-          <Title>checkout</Title>
-          <form>
-            <CheckoutPart>
-              <PartTitle>billing details</PartTitle>
-              <Input
-                label='Name'
-                value={state.name}
-                onChange={(e) => setState({ ...state, name: e })}
-                size='half'
-                type='text'
-              />
-              <Input
-                label='Email Adress'
-                value={state.email}
-                onChange={(e) => setState({ ...state, email: e })}
-                size='half'
-                type='text'
-              />
-              <Input
-                label='Phone Number'
-                value={state.phone}
-                onChange={(e) => setState({ ...state, phone: e })}
-                size='half'
-                type='text'
-              />
-            </CheckoutPart>
-            <CheckoutPart>
-              <PartTitle>shipping info</PartTitle>
-              <Input
-                label='Adress'
-                value={state.adress}
-                onChange={(e) => setState({ ...state, adress: e })}
-                size='full'
-                type='text'
-              />
-              <Input
-                label='ZIP code'
-                value={state.zipCode}
-                onChange={(e) => setState({ ...state, zipCode: e })}
-                size='half'
-                type='text'
-              />
-              <Input
-                label='City'
-                value={state.city}
-                onChange={(e) => setState({ ...state, city: e })}
-                size='half'
-                type='text'
-              />
-              <Input
-                label='Country'
-                value={state.country}
-                onChange={(e) => setState({ ...state, country: e })}
-                size='half'
-                type='text'
-              />
-            </CheckoutPart>
-            <CheckoutPart>
-              <PartTitle>payment details</PartTitle>
-              <Label>Payment Method</Label>
-
-              <PaymentMethodContainer>
+    <>
+      {validated === true && <OrderConfirmation cartItem={cart} />}
+      <Body validated={validated}>
+        <BackButton>Go Back</BackButton>
+        <Container>
+          <CheckOutContainer>
+            <Title>checkout</Title>
+            <form>
+              <CheckoutPart>
+                <PartTitle>billing details</PartTitle>
                 <Input
-                  type='radio'
-                  onChange={(e) => setState({ ...state, paymentMethod: e })}
-                  label='e-Money'
-                  value='emoney'
+                  label='Name'
+                  value={state.name}
+                  onChange={(e) => setState({ ...state, name: e })}
                   size='half'
-                  checked={state.paymentMethod === 'emoney' ? true : false}
+                  type='text'
+                  error={error.name}
                 />
                 <Input
-                  type='radio'
-                  onChange={(e) => setState({ ...state, paymentMethod: e })}
-                  label='Cash on Delivery'
-                  value='cash'
+                  label='Email Adress'
+                  value={state.email}
+                  onChange={(e) => setState({ ...state, email: e })}
                   size='half'
-                  checked={state.paymentMethod === 'cash' ? true : false}
+                  type='text'
+                  error={error.email}
                 />
-              </PaymentMethodContainer>
+                <Input
+                  label='Phone Number'
+                  value={state.phone}
+                  onChange={(e) => setState({ ...state, phone: e })}
+                  size='half'
+                  type='text'
+                  error={error.phone}
+                />
+              </CheckoutPart>
+              <CheckoutPart>
+                <PartTitle>shipping info</PartTitle>
+                <Input
+                  label='Adress'
+                  value={state.adress}
+                  onChange={(e) => setState({ ...state, adress: e })}
+                  size='full'
+                  type='text'
+                  error={error.adress}
+                />
+                <Input
+                  label='ZIP code'
+                  value={state.zipCode}
+                  onChange={(e) => setState({ ...state, zipCode: e })}
+                  size='half'
+                  type='text'
+                  error={error.zipCode}
+                />
+                <Input
+                  label='City'
+                  value={state.city}
+                  onChange={(e) => setState({ ...state, city: e })}
+                  size='half'
+                  type='text'
+                  error={error.city}
+                />
+                <Input
+                  label='Country'
+                  value={state.country}
+                  onChange={(e) => setState({ ...state, country: e })}
+                  size='half'
+                  type='text'
+                  error={error.country}
+                />
+              </CheckoutPart>
+              <CheckoutPart>
+                <PartTitle>payment details</PartTitle>
+                <Label>Payment Method</Label>
 
-              {state.paymentMethod === 'emoney' && (
-                <PaymentInfos>
+                <PaymentMethodContainer>
                   <Input
-                    label='e-Money Number'
-                    value={state.eMoneyNumber}
-                    onChange={(e) => setState({ ...state, eMoneyNumber: e })}
+                    type='radio'
+                    onChange={(e) => setState({ ...state, paymentMethod: e })}
+                    label='e-Money'
+                    value='emoney'
                     size='half'
-                    type='text'
-                    name='radio'
+                    checked={state.paymentMethod === 'emoney' ? true : false}
                   />
                   <Input
-                    label='e-Money PIN'
-                    value={state.eMoneyPin}
-                    onChange={(e) => setState({ ...state, eMoneyPin: e })}
+                    type='radio'
+                    onChange={(e) => setState({ ...state, paymentMethod: e })}
+                    label='Cash on Delivery'
+                    value='cash'
                     size='half'
-                    type='text'
-                    name='radio'
+                    checked={state.paymentMethod === 'cash' ? true : false}
                   />
-                </PaymentInfos>
-              )}
-            </CheckoutPart>
-          </form>
-        </CheckOutContainer>
-        <SummaryContainer size={calcSummarySize()}>
-          <Cart />
-          {cart.length > 0 && (
-            <Button
-              variant={4}
-              text='checkout'
-              clickHandler={() => {
-                console.log('yoyo');
-              }}
-            />
-          )}
-        </SummaryContainer>
-      </Container>
-    </Body>
+                </PaymentMethodContainer>
+
+                {state.paymentMethod === 'emoney' && (
+                  <PaymentInfos>
+                    <Input
+                      label='e-Money Number'
+                      value={state.eMoneyNumber}
+                      onChange={(e) => setState({ ...state, eMoneyNumber: e })}
+                      size='half'
+                      type='text'
+                      name='radio'
+                      error={error.eMoneyNumber}
+                    />
+                    <Input
+                      label='e-Money PIN'
+                      value={state.eMoneyPin}
+                      onChange={(e) => setState({ ...state, eMoneyPin: e })}
+                      size='half'
+                      type='text'
+                      name='radio'
+                      error={error.eMoneyPin}
+                    />
+                  </PaymentInfos>
+                )}
+              </CheckoutPart>
+            </form>
+          </CheckOutContainer>
+          <SummaryContainer size={calcSummarySize()}>
+            <Cart />
+            {cart.length > 0 && (
+              <Button
+                variant={4}
+                text='checkout'
+                clickHandler={() => {
+                  validation();
+                }}
+              />
+            )}
+          </SummaryContainer>
+        </Container>
+      </Body>
+    </>
   );
 };
 
 export default checkout;
 
-const Body = styled.div`
+const Body = styled.div<{ validated }>`
   background: ${({ theme }) => theme.colors.secondaryLight};
   display: flex;
   flex-direction: column;
   height: 100%;
+  filter: ${({ validated }) => validated === true && 'brightness(50%)'};
 `;
 
 const BackButton = styled.button`

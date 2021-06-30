@@ -142,6 +142,7 @@ const checkout = () => {
                     onChange={(e) => setState({ ...state, eMoneyNumber: e })}
                     size='half'
                     type='text'
+                    name='radio'
                   />
                   <Input
                     label='e-Money PIN'
@@ -149,6 +150,7 @@ const checkout = () => {
                     onChange={(e) => setState({ ...state, eMoneyPin: e })}
                     size='half'
                     type='text'
+                    name='radio'
                   />
                 </PaymentInfos>
               )}

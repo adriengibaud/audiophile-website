@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createClient } from 'contentful';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '@/components/Input';
@@ -45,7 +45,7 @@ const checkout = () => {
     eMoneyPin: '',
   });
 
-  const [validated, setValidated] = useState<string | boolean>(false);
+  const [validated, setValidated] = useState<string | boolean>();
 
   const [error, setError] = useState({
     name: null,
@@ -62,8 +62,7 @@ const checkout = () => {
   const validation = () => {
     setValidated('pending');
     setError(checkoutValidation(state));
-    if (Object.keys(error).every((e) => error[e] === null)) setValidated(false);
-    else setValidated(true);
+    window.scrollTo(0, 0);
   };
 
   const cart = useSelector(selectCart);
@@ -84,7 +83,13 @@ const checkout = () => {
     return price;
   };
 
-  console.log(validated);
+  useEffect(() => {
+    if (validated === 'pending') {
+      if (!Object.keys(error).every((e) => error[e] === null))
+        setValidated(false);
+      else setValidated(true);
+    }
+  }, [error]);
 
   return (
     <>

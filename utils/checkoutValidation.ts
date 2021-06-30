@@ -44,11 +44,25 @@ const checkoutValidation = (infos: CheckoutInformationsType) => {
 
   if (infos.country.length < 3) check = { ...check, country: 'wrong format' };
 
-  if (infos.paymentMethod === 'emoney' && !infos.eMoneyNumber.match(cardFormat))
-    check = { ...check, eMoneyNumber: 'wrong format' };
+  if (infos.paymentMethod === 'emoney') {
+    if (!infos.eMoneyNumber.match(cardFormat)) {
+      if (infos.eMoneyNumber.length < 3) {
+        check = { ...check, eMoneyNumber: 'missing information' };
+      } else {
+        check = { ...check, eMoneyNumber: 'wrong format' };
+      }
+    }
+  }
 
-  if (infos.paymentMethod === 'emoney' && !infos.eMoneyPin.match(pinCodeFormat))
-    check = { ...check, eMoneyPin: 'wrong format' };
+  if (infos.paymentMethod === 'emoney') {
+    if (!infos.eMoneyPin.match(pinCodeFormat)) {
+      if (infos.eMoneyPin.length < 3) {
+        check = { ...check, eMoneyPin: 'missing information' };
+      } else {
+        check = { ...check, eMoneyPin: 'wrong format' };
+      }
+    }
+  }
 
   if (!Object.keys(check).every((k) => check[k] === null))
     check = { ...check, validate: false };

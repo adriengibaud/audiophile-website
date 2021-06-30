@@ -45,7 +45,7 @@ const checkout = () => {
     eMoneyPin: '',
   });
 
-  const [validated, setValidated] = useState<string | boolean>(true);
+  const [validated, setValidated] = useState<string | boolean>(false);
 
   const [error, setError] = useState({
     name: null,
@@ -75,9 +75,20 @@ const checkout = () => {
     } else return 140;
   };
 
+  const totalPrice = () => {
+    let price = 0;
+    cart.map((item) => {
+      let itemTotal = item.price * item.quantity;
+      price += itemTotal;
+    });
+    return price;
+  };
+
   return (
     <>
-      {validated === true && <OrderConfirmation cartItem={cart} />}
+      {validated === true && (
+        <OrderConfirmation cartItem={cart} totalPrice={totalPrice()} />
+      )}
       <Body validated={validated}>
         <BackButton>Go Back</BackButton>
         <Container>
@@ -195,7 +206,7 @@ const checkout = () => {
             </form>
           </CheckOutContainer>
           <SummaryContainer size={calcSummarySize()}>
-            <Cart />
+            <Cart totalPrice={totalPrice()} />
             {cart.length > 0 && (
               <Button
                 variant={4}

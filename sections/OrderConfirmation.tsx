@@ -3,9 +3,18 @@ import { useState } from 'react';
 import CartItem from '@/components/cart/CartItem';
 import { FiCheck } from 'react-icons/fi';
 import { ProductCart } from '@/types/productCart';
+import Button from '@/components/Button';
+import { useRouter } from 'next/router';
 
-const OrderConfirmation = ({ cartItem }: { cartItem: ProductCart[] }) => {
+const OrderConfirmation = ({
+  cartItem,
+  totalPrice,
+}: {
+  cartItem: ProductCart[];
+  totalPrice: number;
+}) => {
   const [cartDisplay, setCartDisplay] = useState(1);
+  const router = useRouter();
 
   const moreItemText = () => {
     return cartItem.length - cartDisplay;
@@ -20,7 +29,9 @@ const OrderConfirmation = ({ cartItem }: { cartItem: ProductCart[] }) => {
         <Title>
           thank you <br /> for your order
         </Title>
-        <Subtitle>You will receive an email confirmation shortly.</Subtitle>
+        <Subtitle>
+          You will receive an email confirmation shortly. (no)
+        </Subtitle>
         <ItemsRecap>
           <ItemsList>
             {cartItem.slice(0, cartDisplay).map((item) => {
@@ -32,8 +43,16 @@ const OrderConfirmation = ({ cartItem }: { cartItem: ProductCart[] }) => {
               </ShowMoreButton>
             )}
           </ItemsList>
-          <Total>yoyoyo</Total>
+          <Total>
+            <TotalTitle>grand total</TotalTitle>
+            <TotalPrice>$ {totalPrice + 50}</TotalPrice>
+          </Total>
         </ItemsRecap>
+        <Button
+          variant={4}
+          text='back to home'
+          clickHandler={() => router.push('/')}
+        />
       </Body>
     </Container>
   );
@@ -53,12 +72,13 @@ const Body = styled.section`
   background: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
   width: 540px;
-  min-height: 580px;
   margin: 70px auto 0 auto;
   padding: 40px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  @media screen and (max-width: 689px) {
+    width: 327px;
+  }
 `;
 
 const IconContainer = styled.div`
@@ -70,26 +90,43 @@ const IconContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-bottom: 35px;
   .icon {
     color: white;
     font-size: 40px;
+  }
+  @media screen and (max-width: 689px) {
+    margin-bottom: 20px;
   }
 `;
 
 const Title = styled.h3`
   width: 294px;
+  margin-bottom: 35px;
+  @media screen and (max-width: 689px) {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
 `;
 
 const Subtitle = styled.p`
   font: 15px Manrope;
   opacity: 50%;
+  margin-bottom: 35px;
+  @media screen and (max-width: 689px) {
+    margin-bottom: 20px;
+  }
 `;
 
 const ItemsRecap = styled.div`
   min-height: 140px;
   width: 100%;
   display: flex;
-  flex-direction: row;
+  margin-bottom: 35px;
+  @media screen and (max-width: 689px) {
+    margin-bottom: 20px;
+    flex-direction: column;
+  }
 `;
 
 const ItemsList = styled.div`
@@ -100,13 +137,17 @@ const ItemsList = styled.div`
   padding: 15px;
   display: flex;
   flex-direction: column;
+  @media screen and (max-width: 689px) {
+    width: 100%;
+    border-radius: 8px 8px 0 0;
+  }
 `;
 
 const ShowMoreButton = styled.button`
   width: 100%;
-  height: 46px;
-  border-top: 1px solid red;
-
+  height: 36px;
+  border-top: 1px solid grey;
+  margin-top: 10px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -115,7 +156,28 @@ const ShowMoreButton = styled.button`
 
 const Total = styled.div`
   width: 40%;
-  height: 100%;
   background: ${({ theme }) => theme.colors.black};
   border-radius: 0 8px 8px 0;
+  color: ${({ theme }) => theme.colors.white};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 30px;
+  @media screen and (max-width: 689px) {
+    width: 100%;
+    border-radius: 0 0 8px 8px;
+    height: 80px;
+  }
+`;
+
+const TotalTitle = styled.p`
+  font: 15px Manrope;
+  line-height: 25px;
+  text-transform: uppercase;
+  opacity: 50%;
+`;
+
+const TotalPrice = styled.p`
+  font: 18px Manrope;
+  line-height: 25px;
 `;

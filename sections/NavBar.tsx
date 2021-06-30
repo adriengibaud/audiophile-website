@@ -95,7 +95,11 @@ const NavBar = ({ categoriesData }: { categoriesData: CategoryTypes[] }) => {
             src='/icon-cart.svg'
             alt=''
           />
-          {cart.length > 0 && <QuantityInCart>{cart.length}</QuantityInCart>}
+          {cart.length > 0 && (
+            <QuantityInCart onClick={() => setCartOpen(!cartOpen)}>
+              {cart.length}
+            </QuantityInCart>
+          )}
         </HeaderBody>
       </Container>
       <MenuBackground onClick={() => setIsOpen(false)} isOpen={isOpen} />
@@ -193,7 +197,7 @@ const CartContainer = styled.img`
 const QuantityInCart = styled.span`
   width: 20px;
   height: 20px;
-  background: red;
+  background: ${({ theme }) => theme.colors.primary};
   border-radius: 50%;
   color: white;
   vertical-align: top;

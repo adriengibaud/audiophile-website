@@ -3,16 +3,8 @@ import CartItem from '../cart/CartItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCart } from 'app/reducers/cartReducer';
 
-const Cart = () => {
+const Cart = ({ totalPrice }: { totalPrice: number }) => {
   const cart = useSelector(selectCart);
-  const totalPrice = () => {
-    let price = 0;
-    cart.map((item) => {
-      let itemTotal = item.price * item.quantity;
-      price += itemTotal;
-    });
-    return price;
-  };
 
   return (
     <Container>
@@ -27,7 +19,7 @@ const Cart = () => {
           <PriceInfosContainer>
             <PriceInfos>
               <PriceTitle>total</PriceTitle>
-              <Price>$ {totalPrice()}</Price>
+              <Price>$ {totalPrice}</Price>
             </PriceInfos>
             <PriceInfos>
               <PriceTitle>shipping</PriceTitle>
@@ -35,11 +27,11 @@ const Cart = () => {
             </PriceInfos>
             <PriceInfos>
               <PriceTitle>vat (included)</PriceTitle>
-              <Price>$ {Math.round(totalPrice() * 0.2)}</Price>
+              <Price>$ {Math.round(totalPrice * 0.2)}</Price>
             </PriceInfos>
             <PriceInfos>
               <PriceTitle>grand total</PriceTitle>
-              <Price primary>$ {totalPrice() + 50}</Price>
+              <Price primary>$ {totalPrice + 50}</Price>
             </PriceInfos>
           </PriceInfosContainer>
         </>

@@ -62,8 +62,7 @@ const checkout = () => {
   const validation = () => {
     setValidated('pending');
     setError(checkoutValidation(state));
-    if (!Object.keys(error).every((e) => error[e] === null))
-      setValidated(false);
+    if (Object.keys(error).every((e) => error[e] === null)) setValidated(false);
     else setValidated(true);
   };
 
@@ -74,6 +73,7 @@ const checkout = () => {
       return 360 + 10 + 79 * cart.length;
     } else return 140;
   };
+  console.log(error);
 
   const totalPrice = () => {
     let price = 0;
@@ -83,6 +83,8 @@ const checkout = () => {
     });
     return price;
   };
+
+  console.log(validated);
 
   return (
     <>

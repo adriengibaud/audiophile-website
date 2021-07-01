@@ -68,7 +68,6 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       object: data.items[0],
-
       categoriesData: categoriesData.items,
       footerData: footerData.items[0],
       brandData: brandData.items[0],

@@ -51,6 +51,7 @@ const Container = styled.div`
   max-width: 100vw;
   height: 630px;
   background: ${({ theme }) => theme.colors.secondary};
+  margin-bottom: 100px;
 `;
 
 const HeaderBody = styled.section`

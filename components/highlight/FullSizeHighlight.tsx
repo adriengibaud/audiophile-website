@@ -50,7 +50,7 @@ const Container = styled.section`
   width: 1110px;
   height: 560px;
   background: ${({ theme }) => theme.colors.primary};
-  margin: 60px auto 0 auto;
+  margin: 100px auto 0 auto;
   border-radius: 8px;
   overflow: hidden;
   background-image: url(/pattern-circles.svg);

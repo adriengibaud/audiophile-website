@@ -8,7 +8,6 @@ const MayLikeProduct = ({ link }: { link: LinkTypes }) => {
   const router = useRouter();
 
   const redirectToItem = (category, slug) => {
-    console.log(category);
     router.push('/products/' + category + '/' + slug);
   };
 
@@ -20,7 +19,14 @@ const MayLikeProduct = ({ link }: { link: LinkTypes }) => {
           .filter((link) => link.nodeType === 'embedded-entry-block')
           .map((link) => (
             <Entry key={link.data.target.fields.slug}>
-              <EntryImage>
+              <EntryImage
+                onClick={() =>
+                  redirectToItem(
+                    link.data.target.sys.contentType.sys.id,
+                    link.data.target.fields.slug
+                  )
+                }
+              >
                 <Image
                   src={`https:${link.data.target.fields.productImage.fields.file.url}`}
                   layout='fill'
@@ -100,6 +106,7 @@ const EntryImage = styled.div`
   width: 100%;
   height: 318px;
   position: relative;
+  cursor: pointer;
   .image {
     border-radius: 8px;
   }

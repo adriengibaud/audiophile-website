@@ -45,6 +45,7 @@ const Button = styled.button`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   color: ${({ theme }) => theme.colors.primary};
   font: 25px Manrope;
 `;

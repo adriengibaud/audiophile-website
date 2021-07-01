@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { createClient } from 'contentful';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Input from '@/components/Input';
 import { selectCart } from 'app/reducers/cartReducer';
@@ -109,7 +109,9 @@ const checkout = () => {
         <OrderConfirmation cartItem={cart} totalPrice={totalPrice()} />
       )}
       <Body validated={validated}>
-        <BackButton onClick={() => router.back()}>Go Back</BackButton>
+        <BackButton>
+          <a onClick={() => router.back()}>Go Back</a>
+        </BackButton>
         <Container>
           <CheckOutContainer>
             <Title>checkout</Title>
@@ -258,6 +260,10 @@ const BackButton = styled.button`
   font: 15px Manrope;
   line-height: 25px;
   opacity: 50%;
+
+  a {
+    cursor: pointer;
+  }
   @media screen and (max-width: 1110px) {
     width: 689px;
   }

@@ -26,6 +26,7 @@ const ButtonContainer = styled.button<{ variant: number }>`
     (variant === 4 && theme.colors.primary)};
   border: ${({ variant }) => variant === 2 && 'solid 1px black'};
   height: 48px;
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   justify-content: center;

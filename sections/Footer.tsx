@@ -180,6 +180,7 @@ const LinkContainer = styled.div`
 const LinkIcon = styled.button`
   width: 24px;
   position: relative;
+  cursor: pointer;
   line-height: 24px;
   .image {
     fill: ${({ theme }) => theme.colors.white};

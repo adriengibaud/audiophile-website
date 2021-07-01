@@ -51,6 +51,7 @@ const Entry = styled.button`
   font: 13px Manrope;
   font-weight: bold;
   line-height: 25px;
+  cursor: pointer;
   letter-spacing: 2px;
   text-transform: uppercase;
   :hover {

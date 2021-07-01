@@ -170,6 +170,7 @@ const HamburgerButton = styled.button<{ isOpen: boolean }>`
 const ImageContainer = styled.div`
   position: relative;
   width: 143px;
+  cursor: pointer;
   height: 25px;
   @media screen and (max-width: 1110px) {
     margin-right: auto;
@@ -193,6 +194,7 @@ const CartContainer = styled.img`
   height: 30px;
   padding-right: 10px;
   max-width: 40px;
+  cursor: pointer;
 `;
 
 const QuantityInCart = styled.span`
@@ -201,6 +203,7 @@ const QuantityInCart = styled.span`
   background: ${({ theme }) => theme.colors.primary};
   border-radius: 50%;
   color: white;
+  cursor: pointer;
   vertical-align: top;
   margin-left: -20px;
   transform: translateY(9px);
@@ -256,6 +259,7 @@ const MenuEntry = styled.button`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 `;
 
 const TextEntry = styled.h6``;

@@ -111,8 +111,8 @@ const ProductDetails = ({
         />
       </Head>
       <Container>
-        <BackButton onClick={() => router.back()}>
-          <a>Go Back</a>
+        <BackButton>
+          <a onClick={() => router.back()}>Go Back</a>
         </BackButton>
         <TopContainer>
           <ImageContainer>
@@ -212,6 +212,7 @@ const BackButton = styled.button`
   a {
     font: 15px Manrope;
     line-height: 25px;
+    cursor: pointer;
   }
   margin-bottom: 50px;
 `;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { createClient } from 'contentful';
 import { useSelector, useDispatch } from 'react-redux';
@@ -95,6 +96,15 @@ const checkout = () => {
 
   return (
     <>
+      <Head>
+        <title>Audiophile | Checkout</title>
+        <link rel='preconnect' href='https://fonts.googleapis.com' />
+        <link rel='preconnect' href='https://fonts.gstatic.com' />
+        <link
+          href='https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap'
+          rel='stylesheet'
+        />
+      </Head>
       {validated === true && (
         <OrderConfirmation cartItem={cart} totalPrice={totalPrice()} />
       )}

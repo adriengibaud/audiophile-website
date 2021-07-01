@@ -37,6 +37,7 @@ export default Category;
 const Container = styled.div`
   width: 350px;
   height: 284px;
+  cursor: pointer;
   @media screen and (max-width: 1110px) {
     width: 223px;
     height: 217px;

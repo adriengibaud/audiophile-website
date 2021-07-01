@@ -21,6 +21,7 @@ const ProductResult = ({
           objectFit='cover'
           quality={100}
           className='image'
+          alt='product image'
         />
       </ImageContainer>
       <InfosContainer>

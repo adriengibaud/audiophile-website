@@ -91,12 +91,19 @@ const ProductDetails = ({
 
   const addAmount = () => setQuantity(quantity + 1);
   const decreaseAmount = () => setQuantity(quantity - 1);
-  const { inTheBox, features, gallery, link } = object.fields;
-  console.log(object);
+  const { inTheBox, features, gallery, link, title } = object.fields;
   return (
     <>
       <Head>
-        <title>Audiophile</title>
+        <title>
+          Audiophile |{' '}
+          {
+            title
+              .split('speaker')[0]
+              .split('earphone')[0]
+              .split('headphones')[0]
+          }
+        </title>
         <link rel='preconnect' href='https://fonts.googleapis.com' />
         <link rel='preconnect' href='https://fonts.gstatic.com' />
         <link
@@ -120,7 +127,7 @@ const ProductDetails = ({
           </ImageContainer>
           <InfosContainer>
             {object.fields.new && <NewProduct>new product</NewProduct>}
-            <Title>{object.fields.title}</Title>
+            <Title>{title}</Title>
             <Description>{object.fields.description}</Description>
             <Price>$ {object.fields.price}</Price>
             <ActionContainer>

@@ -27,6 +27,7 @@ const MayLikeProduct = ({ link }: { link: LinkTypes }) => {
                   objectFit='cover'
                   quality={75}
                   className='image'
+                  alt='product image'
                 />
               </EntryImage>
               <EntryTitle>{link.data.target.fields.title}</EntryTitle>

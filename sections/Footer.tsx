@@ -27,6 +27,7 @@ const Footer = ({
               layout='fill'
               objectFit='cover'
               className='image'
+              alt="Company's logo"
             />
           </Logo>
           <NavButtons categoriesData={categoriesData} />

@@ -16,7 +16,6 @@ const Cart = ({
   const router = useRouter();
   const cart = useSelector(selectCart);
   const dispatch = useDispatch();
-  console.log(cart);
 
   const totalPrice = () => {
     let price = 0;

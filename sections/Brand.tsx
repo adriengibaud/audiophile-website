@@ -43,6 +43,7 @@ const Brand = ({ brandData }: { brandData: BrandType }) => {
           layout='fill'
           objectFit='cover'
           className='image'
+          alt='brand representative image'
         />
       </DesktopImageContainer>
       <MobileImageContainer>
@@ -51,6 +52,7 @@ const Brand = ({ brandData }: { brandData: BrandType }) => {
           layout='fill'
           objectFit='cover'
           className='image'
+          alt='brand representative image'
         />
       </MobileImageContainer>
       <TabletImageContainer>
@@ -59,6 +61,7 @@ const Brand = ({ brandData }: { brandData: BrandType }) => {
           layout='fill'
           objectFit='cover'
           className='image'
+          alt='brand representative image'
         />
       </TabletImageContainer>
     </Container>

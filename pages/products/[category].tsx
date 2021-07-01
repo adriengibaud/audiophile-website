@@ -69,8 +69,6 @@ const CategoriesResult = ({
   brandData: BrandType;
 }) => {
   const router = useRouter();
-  console.log(product);
-  console.log(category);
 
   const categoryTitle = () => {
     const categoryPlurial = category + 's';
@@ -78,14 +76,16 @@ const CategoriesResult = ({
   };
 
   const redirectToItem = (slug) => {
-    console.log(category);
     router.push('/products/' + category + '/' + slug);
   };
 
   return (
     <>
       <Head>
-        <title>Audiophile</title>
+        <title>
+          Audiophile |{' '}
+          {categoryTitle().charAt(0).toUpperCase() + categoryTitle().slice(1)}
+        </title>
         <link rel='preconnect' href='https://fonts.googleapis.com' />
         <link rel='preconnect' href='https://fonts.gstatic.com' />
         <link

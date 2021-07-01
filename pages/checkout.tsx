@@ -36,7 +36,7 @@ const checkout = () => {
     name: '',
     email: '',
     phone: '',
-    adress: '',
+    address: '',
     zipCode: '',
     city: '',
     country: '',
@@ -51,7 +51,7 @@ const checkout = () => {
     name: null,
     email: null,
     phone: null,
-    adress: null,
+    address: null,
     zipCode: null,
     city: null,
     country: null,
@@ -72,7 +72,6 @@ const checkout = () => {
       return 360 + 10 + 79 * cart.length;
     } else return 140;
   };
-  console.log(error);
 
   const totalPrice = () => {
     let price = 0;
@@ -132,12 +131,12 @@ const checkout = () => {
               <CheckoutPart>
                 <PartTitle>shipping info</PartTitle>
                 <Input
-                  label='Adress'
-                  value={state.adress}
-                  onChange={(e) => setState({ ...state, adress: e })}
+                  label='Street Address'
+                  value={state.address}
+                  onChange={(e) => setState({ ...state, address: e })}
                   size='full'
                   type='text'
-                  error={error.adress}
+                  error={error.address}
                 />
                 <Input
                   label='ZIP code'

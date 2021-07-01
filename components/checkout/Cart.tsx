@@ -12,8 +12,8 @@ const Cart = ({ totalPrice }: { totalPrice: number }) => {
       {cart.length > 0 ? (
         <>
           <ItemsContainer>
-            {cart.map((e) => {
-              return <CartItem summary={true} item={e} />;
+            {cart.map((e, i) => {
+              return <CartItem key={i} summary={true} item={e} />;
             })}
           </ItemsContainer>
           <PriceInfosContainer>

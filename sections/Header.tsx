@@ -35,6 +35,7 @@ const Header = ({ data }: { data: HeaderTypes }) => {
               layout='fill'
               objectFit='contain'
               quality={75}
+              alt='flagship product'
             />
           </ImageContainer>
         </HeaderBody>

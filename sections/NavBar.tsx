@@ -64,7 +64,8 @@ const NavBar = ({ categoriesData }: { categoriesData: CategoryTypes[] }) => {
                   src={`https:${e.fields.image.fields.file.url}`}
                   layout='fill'
                   objectFit='contain'
-                  quality={100}
+                  quality={50}
+                  alt='category image'
                 />
               </EntryImageContainer>
             </MenuEntry>
@@ -84,7 +85,7 @@ const NavBar = ({ categoriesData }: { categoriesData: CategoryTypes[] }) => {
           </HamburgerButton>
           <ImageContainer>
             <Link href='/'>
-              <Image src='/logo.svg' layout='fill' />
+              <Image src='/logo.svg' layout='fill' alt="Company's logo" />
             </Link>
           </ImageContainer>
           <Menu>

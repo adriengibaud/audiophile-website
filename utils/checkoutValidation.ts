@@ -6,13 +6,12 @@ const checkoutValidation = (infos: CheckoutInformationsType) => {
     name: null,
     email: null,
     phone: null,
-    adress: null,
+    address: null,
     zipCode: null,
     city: null,
     country: null,
     eMoneyNumber: null,
     eMoneyPin: null,
-    validate: null,
   };
   const mailFormat =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -35,7 +34,7 @@ const checkoutValidation = (infos: CheckoutInformationsType) => {
   if (!infos.phone.match(phoneFormat))
     check = { ...check, phone: 'wrong format' };
 
-  if (infos.adress.length < 6) check = { ...check, adress: 'wrong format' };
+  if (infos.address.length < 6) check = { ...check, address: 'wrong format' };
 
   if (infos.zipCode.length < 4 && infos.zipCode.length >= 6)
     check = { ...check, zipCode: 'wrong format' };
@@ -63,19 +62,7 @@ const checkoutValidation = (infos: CheckoutInformationsType) => {
       }
     }
   }
-
-  if (!Object.keys(check).every((k) => check[k] === null))
-    check = { ...check, validate: false };
-  console.log(check);
   return check;
-};
-
-export const validateEmail = (email) => {
-  const mailFormat =
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  if (email.match(mailFormat)) {
-    return { error: null };
-  } else return { error: 'wrong format' };
 };
 
 export default checkoutValidation;

@@ -14,7 +14,6 @@ const NavButtons = ({
     else router.push('/');
   };
 
-  console.log(categoriesData);
   return (
     <Container>
       <Entry onClick={() => handleClick()}>Home</Entry>

@@ -94,9 +94,6 @@ export default function Home({
   filterList,
   data,
 }) {
-  console.log(filterList);
-  console.log(data);
-
   return (
     <>
       {/* {contentTypes

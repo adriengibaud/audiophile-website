@@ -16,6 +16,7 @@ const ProductGallery = ({ gallery }: { gallery: ImageTypes[] }) => {
                 objectFit='cover'
                 quality={100}
                 className='image'
+                alt='product image'
               />
             </SmallImageContainer>
           ))}
@@ -31,6 +32,7 @@ const ProductGallery = ({ gallery }: { gallery: ImageTypes[] }) => {
               objectFit='cover'
               quality={100}
               className='image'
+              alt='product image'
             />
           ))}
       </BigImageContainer>

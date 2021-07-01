@@ -6,7 +6,6 @@ import { theme } from 'styles/theme';
 import Layout from '../components/Layout';
 
 function MyApp({ Component, pageProps }) {
-  console.log(pageProps);
   return (
     <>
       <GlobalStyle />

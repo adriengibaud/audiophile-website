@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { createClient } from 'contentful';
 import { useSelector, useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 import Input from '@/components/Input';
 import { selectCart } from 'app/reducers/cartReducer';
 import Cart from '@/components/checkout/Cart';
@@ -32,6 +33,8 @@ export async function getStaticProps() {
 }
 
 const checkout = () => {
+  const router = useRouter();
+
   const [state, setState] = useState<CheckoutInformationsType>({
     name: '',
     email: '',
@@ -96,7 +99,7 @@ const checkout = () => {
         <OrderConfirmation cartItem={cart} totalPrice={totalPrice()} />
       )}
       <Body validated={validated}>
-        <BackButton>Go Back</BackButton>
+        <BackButton onClick={() => router.back()}>Go Back</BackButton>
         <Container>
           <CheckOutContainer>
             <Title>checkout</Title>

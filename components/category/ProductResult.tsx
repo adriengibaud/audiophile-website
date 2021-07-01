@@ -18,7 +18,7 @@ const ProductResult = ({
         <Image
           src={`https:${productData.fields.productImage.fields.file.url}`}
           layout='fill'
-          objectFit='cover'
+          objectFit='contain'
           quality={100}
           className='image'
           alt='product image'
@@ -50,7 +50,7 @@ const Container = styled.section<{ index: number }>`
   align-items: center;
   @media screen and (max-width: 1110px) {
     flex-direction: column;
-    width: 500px;
+    width: 689px;
     height: 756px;
   }
   @media screen and (max-width: 689px) {
@@ -64,12 +64,14 @@ const ImageContainer = styled.div`
   height: 100%;
   position: relative;
   cursor: pointer;
+  background: ${({ theme }) => theme.colors.secondaryLight};
+  border-radius: 8px;
   .image {
     border-radius: 8px;
   }
   @media screen and (max-width: 1110px) {
-    width: 500px;
-    height: 400px;
+    width: 689px;
+    height: 352px;
   }
   @media screen and (max-width: 689px) {
     width: 100%;
